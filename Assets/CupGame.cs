@@ -8,66 +8,78 @@ public class CupGame : MonoBehaviour
 
     public GameObject bar;
 
+    private RectTransform barRect;
+
     public GameObject redBar; //Outer
 
-    private Image redBarImage;
+    private RectTransform redBarRect;
 
     public GameObject yellowBar;
 
-    private Image yellowBarImage;
+    private RectTransform yellowBarRect;
 
     public GameObject greenBar; //Center
 
-    private Image greenBarImage;
+    private RectTransform greenBarRect;
 
     float leftBound, rightBound;
 
-    bool forward = true;
+    bool forward;
 
-    private float barspeed = 0.5f;
+    private float barspeed = 100f;
 
     void Awake()
     {
+        forward = true;
 
-        greenBarImage = greenBar.GetComponent<Image>();
+        barRect = bar.GetComponent<RectTransform>();
 
-        yellowBarImage = yellowBar.GetComponent<Image>();
+        greenBarRect = greenBar.GetComponent<RectTransform>();
 
-        redBarImage = redBar.GetComponent<Image>();
+        yellowBarRect = yellowBar.GetComponent<RectTransform>();
 
-        //leftBound = redBarCorners[0].x;
+        redBarRect = redBar.GetComponent<RectTransform>();
 
-        //rightBound = redBarCorners[2].x;
+        leftBound = redBarRect.localPosition.x - redBarRect.rect.width/2;
 
-        Debug.Log("right bound: " + rightBound);
+        rightBound = redBarRect.localPosition.x + redBarRect.rect.width / 2;
 
-        Debug.Log("bar: " + bar.GetComponent<Image>().rectTransform.rect.x);
+        Debug.Log("left: " + leftBound + "\n" + "right: " + rightBound + "\n");
 
     }
-    void Update()
+
+    void FixedUpdate()
     {
 
-        float barX = 0f;
+        float barX = barRect.localPosition.x;
 
-        if (forward && barX > leftBound)
+        Debug.Log("bar: " + barX);
+
+        if (forward)
         {
 
-            bar.transform.Translate(new Vector2(1f, 0f) * barspeed * Time.time);
+            bar.transform.Translate(new Vector2(1f, 0f) * barspeed * Time.deltaTime);
+
+        } else {
+       
+            bar.transform.Translate(new Vector2(-1f, 0f) * barspeed * Time.deltaTime);
 
         }
-        else if (forward && barX >= rightBound) 
+
+        if (barX < leftBound) {
+
+            forward = true;
+
+        }
+
+        if (barX > rightBound)
         {
+
             forward = false;
+
         }
 
-        if (!forward && barX < rightBound) {
-
-            bar.transform.Translate(new Vector2(-1f, 0f) * barspeed * Time.time);
-
-        } else if (!forward && barX <= leftBound) 
-        {
-            forward = true; 
-        }
+        Debug.Log("left: " + leftBound + "\n" + "bar: " + barX + "\n" + "right: " + rightBound + "\n" + "forward?: " + forward);
 
     }
 
