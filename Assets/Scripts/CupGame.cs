@@ -24,13 +24,30 @@ public class CupGame : MonoBehaviour
 
     float leftBound, rightBound;
 
-    bool forward;
+    bool forwards = false, backwards = false, start = false;
 
     private float barspeed = 100f;
 
+    public GameObject cup1, cup2, cup3;
+
+    private Vector2 cup1Target, cup2Target, cup3Target;
+
     void Awake()
     {
-        forward = true;
+
+        //keep cups in place
+
+        cup1Target = cup1.transform.position;
+
+        cup2Target = cup2.transform.position;
+
+        cup3Target = cup3.transform.position;
+
+        Debug.Log("Cup positions: \n" + cup1.transform.position + " " + cup2.transform.position + " " + cup3.transform.position);
+
+        Debug.Log("Cup targets: \n" + cup1Target + " " + cup2Target + " " + cup3Target);
+
+        //get components
 
         barRect = bar.GetComponent<RectTransform>();
 
@@ -40,27 +57,72 @@ public class CupGame : MonoBehaviour
 
         redBarRect = redBar.GetComponent<RectTransform>();
 
+        //set bounds for moving black bar
+
         leftBound = redBarRect.localPosition.x - redBarRect.rect.width/2;
 
         rightBound = redBarRect.localPosition.x + redBarRect.rect.width / 2;
 
-        Debug.Log("left: " + leftBound + "\n" + "right: " + rightBound + "\n");
+        //Debug.Log("left: " + leftBound + "\n" + "right: " + rightBound + "\n");
 
     }
 
+    private void Update()
+    {
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+
+            switch ((int)Random.Range(1, 3))
+            {
+
+                case 1:
+                    SwitchCups(cup1, cup2, ref cup1Target, ref cup2Target);
+
+                    break;
+
+                case 2:
+                    SwitchCups(cup3, cup2, ref cup3Target, ref cup2Target);
+
+                    break;
+
+                case 3:
+                    SwitchCups(cup1, cup3, ref cup1Target, ref cup3Target);
+
+                    break;
+
+
+            }
+
+            Debug.Log("Cup positions: \n" + cup1.transform.position + " " + cup2.transform.position + " " + cup3.transform.position);
+
+            Debug.Log("Cup targets: \n" + cup1Target + " " + cup2Target + " " + cup3Target);
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+
+            start = true;
+
+            forwards = true;
+
+        }
+
+    }
     void FixedUpdate()
     {
 
         float barX = barRect.localPosition.x;
 
-        Debug.Log("bar: " + barX);
+        //Debug.Log("bar: " + barX);
 
-        if (forward)
+        if (forwards && start)
         {
 
             bar.transform.Translate(new Vector2(1f, 0f) * barspeed * Time.deltaTime);
 
-        } else {
+        } else if (backwards){
        
             bar.transform.Translate(new Vector2(-1f, 0f) * barspeed * Time.deltaTime);
 
@@ -68,18 +130,39 @@ public class CupGame : MonoBehaviour
 
         if (barX < leftBound) {
 
-            forward = true;
+            forwards = true;
+
+            backwards = false;
 
         }
 
         if (barX > rightBound)
         {
 
-            forward = false;
+            forwards = false; 
+            
+            backwards = true;
 
         }
 
-        Debug.Log("left: " + leftBound + "\n" + "bar: " + barX + "\n" + "right: " + rightBound + "\n" + "forward?: " + forward);
+        if (start)
+        {
+
+          cup1.transform.position = Vector2.MoveTowards(cup1.transform.position, cup1Target, 5f);
+
+            cup2.transform.position = Vector2.MoveTowards(cup2.transform.position, cup2Target, 5f);
+
+            cup3.transform.position = Vector2.MoveTowards(cup3.transform.position, cup3Target, 5f);
+
+        }
+
+    }
+
+    public void SwitchCups(GameObject cup1, GameObject cup2, ref Vector2 cup1target, ref Vector2 cup2target) {
+
+        cup1target = cup2.transform.position;
+
+        cup2target = cup1.transform.position;
 
     }
 
