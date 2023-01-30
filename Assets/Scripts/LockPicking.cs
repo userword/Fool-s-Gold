@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class LockPicking : MonoBehaviour
 {
@@ -32,9 +33,10 @@ public class LockPicking : MonoBehaviour
 
     private bool StopCheck()
     {
-        float angle = Quaternion.Angle (a, b);
+        //float angle = Quaternion.Angle (a, b);
  
-        bool sameRotation = Mathf.Abs (angle) < 1e-3f;
+        //bool sameRotation = Mathf.Abs (angle) < 1e-3f;
+        return true;
     }
 
     private void Init()
