@@ -22,9 +22,13 @@ public class CupGame : MonoBehaviour
 
     private RectTransform yellowBarRect;
 
+    private YellowBarCollisionHandler yellowBarCollisionHandler;
+
     public GameObject greenBar; //Center
 
     private RectTransform greenBarRect;
+
+    private GreenBarCollisionHandler greenBarCollisionHandler;
 
     float leftBound, rightBound;
 
@@ -62,7 +66,11 @@ public class CupGame : MonoBehaviour
 
         greenBarRect = greenBar.GetComponent<RectTransform>();
 
+        greenBarCollisionHandler = greenBar.GetComponent<GreenBarCollisionHandler>();
+
         yellowBarRect = yellowBar.GetComponent<RectTransform>();
+
+        yellowBarCollisionHandler = yellowBar.GetComponent<YellowBarCollisionHandler>();
 
         redBarRect = redBar.GetComponent<RectTransform>();
 
@@ -190,6 +198,8 @@ public class CupGame : MonoBehaviour
 
         }
 
+        //move the cups to thier target.
+
         cup1.transform.position = Vector2.MoveTowards(cup1.transform.position, cup1Target, cupSpeed);
 
         cup2.transform.position = Vector2.MoveTowards(cup2.transform.position, cup2Target, cupSpeed);
@@ -233,27 +243,20 @@ public class CupGame : MonoBehaviour
 
     public string Status() {
 
-        if (barRect.rect.Overlaps(yellowBarRect.rect)) {
-
-           // return "yellow";
-        
-        }
-
-        if (barRect.rect.Overlaps(redBarRect.rect))
-        {
-
-            return "red";
-
-        }
-
-        if (barRect.rect.Overlaps(greenBarRect.rect))
+        if (greenBarCollisionHandler.Status())
         {
 
             return "green";
 
         }
 
-        return "no collision";
+        if (yellowBarCollisionHandler.Status()) {
+
+            return "yellow";
+        
+        }
+
+        return "red";
 
     }
 
