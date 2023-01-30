@@ -732,6 +732,7 @@ GameObject:
   - component: {fileID: 1932149709293029529}
   - component: {fileID: 1493847396737083024}
   - component: {fileID: 3044587227718873263}
+  - component: {fileID: 7498939228410868431}
   m_Layer: 5
   m_Name: Green
   m_TagString: Untagged
@@ -865,6 +866,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7498939228410868431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6046073247391512139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ced0ee828a319ef4c89bd6a13793ec9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6716740444638317196
 GameObject:
   m_ObjectHideFlags: 0
@@ -1284,6 +1297,7 @@ GameObject:
   - component: {fileID: 8100845727497088262}
   - component: {fileID: 491181215310825638}
   - component: {fileID: 1431137572662626211}
+  - component: {fileID: 936532413091108415}
   m_Layer: 5
   m_Name: Yellow
   m_TagString: Untagged
@@ -1417,3 +1431,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &936532413091108415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9205343033855077557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85c6523125a8d564fbbac0cd096d65b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
