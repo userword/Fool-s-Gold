@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3022365268994837115}
   - component: {fileID: 6182120585603552216}
   - component: {fileID: 2845699941533597090}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Dice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 5238523519719104969}
   - component: {fileID: 2715406102064611181}
   - component: {fileID: 3922922112279097501}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 7846299809775299777}
   - component: {fileID: 661113405593920260}
   - component: {fileID: 3602431628539655072}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Front Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -375,7 +375,7 @@ GameObject:
   - component: {fileID: 8206121917756774080}
   - component: {fileID: 8060000815283080803}
   - component: {fileID: 7552665267405270516}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -485,7 +485,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8080847233364970212}
   - component: {fileID: 9016118906837604666}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DiceRoll
   m_TagString: Untagged
   m_Icon: {fileID: 0}

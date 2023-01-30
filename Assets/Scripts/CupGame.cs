@@ -6,7 +6,11 @@ using UnityEngine.UI;
 public class CupGame : MonoBehaviour
 {
 
+    public GameObject dice;
+
     public GameObject bar;
+
+    private BarCollisionHandler barCollisionHandler;
 
     private RectTransform barRect;
 
@@ -18,15 +22,22 @@ public class CupGame : MonoBehaviour
 
     private RectTransform yellowBarRect;
 
+    private YellowBarCollisionHandler yellowBarCollisionHandler;
+
     public GameObject greenBar; //Center
 
     private RectTransform greenBarRect;
 
+    private GreenBarCollisionHandler greenBarCollisionHandler;
+
     float leftBound, rightBound;
 
-    bool forwards = false, backwards = false, start = false;
+    bool forwards = false, backwards = false,
+        shuffling = false, started = false, chosen = false, show = false; // these booleans are supposed to track the different Mini game states
 
     private float barspeed = 100f;
+
+    private float cupSpeed = 10f;
 
     public GameObject cup1, cup2, cup3;
 
@@ -51,15 +62,21 @@ public class CupGame : MonoBehaviour
 
         barRect = bar.GetComponent<RectTransform>();
 
+        barCollisionHandler = bar.GetComponent<BarCollisionHandler>();
+
         greenBarRect = greenBar.GetComponent<RectTransform>();
 
+        greenBarCollisionHandler = greenBar.GetComponent<GreenBarCollisionHandler>();
+
         yellowBarRect = yellowBar.GetComponent<RectTransform>();
+
+        yellowBarCollisionHandler = yellowBar.GetComponent<YellowBarCollisionHandler>();
 
         redBarRect = redBar.GetComponent<RectTransform>();
 
         //set bounds for moving black bar
 
-        leftBound = redBarRect.localPosition.x - redBarRect.rect.width/2;
+        leftBound = redBarRect.localPosition.x - redBarRect.rect.width / 2;
 
         rightBound = redBarRect.localPosition.x + redBarRect.rect.width / 2;
 
@@ -67,49 +84,98 @@ public class CupGame : MonoBehaviour
 
     }
 
+    IEnumerator ShowDice() {
+
+        started = true;
+
+        Lift(cup2, ref cup2Target, 70f);
+
+        yield return new WaitForSeconds(2);
+
+        Fall(cup2, ref cup2Target, 70f);
+
+        yield return new WaitForSeconds(0.75f);
+
+        dice.transform.SetParent(cup2.transform);
+
+
+
+        shuffling = true;
+
+        forwards = true;
+
+
+
+        Debug.Log("Cup positions: \n" + cup1.transform.position + " " + cup2.transform.position + " " + cup3.transform.position);
+
+        Debug.Log("Cup targets: \n" + cup1Target + " " + cup2Target + " " + cup3Target);
+
+    }
+
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S)) // Show the cups then begin shuffling cups and moving the bar.
         {
+
+            if (!started)
+            {
+
+                StartCoroutine(ShowDice());
+
+            } else if (shuffling) {
+
+                shuffling = false;
+                backwards = false;
+                forwards = false;
+
+                show = true;
+
+                Debug.Log(Status());
+
+                dice.transform.SetParent(null);
+
+            }
+
+        }
+
+        if ( started && !shuffling && cupsStopped() ) {
+
+            chosen = true;
+        
+        }
+
+        if (chosen == true && show == true) { 
 
             switch ((int)Random.Range(1, 3))
             {
 
                 case 1:
-                    SwitchCups(cup1, cup2, ref cup1Target, ref cup2Target);
+                    Lift(cup1, ref cup1Target, 70f);
+                    
 
                     break;
 
                 case 2:
-                    SwitchCups(cup3, cup2, ref cup3Target, ref cup2Target);
+                    Lift(cup2, ref cup2Target, 70f);
+                    
 
                     break;
 
                 case 3:
-                    SwitchCups(cup1, cup3, ref cup1Target, ref cup3Target);
+                    Lift(cup3, ref cup3Target, 70f);
+                    
 
                     break;
 
-
             }
 
-            Debug.Log("Cup positions: \n" + cup1.transform.position + " " + cup2.transform.position + " " + cup3.transform.position);
-
-            Debug.Log("Cup targets: \n" + cup1Target + " " + cup2Target + " " + cup3Target);
-
-        }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-
-            start = true;
-
-            forwards = true;
+            show = false;
 
         }
 
     }
+
     void FixedUpdate()
     {
 
@@ -117,13 +183,13 @@ public class CupGame : MonoBehaviour
 
         //Debug.Log("bar: " + barX);
 
-        if (forwards && start)
+        if (forwards && shuffling)
         {
 
             bar.transform.Translate(new Vector2(1f, 0f) * barspeed * Time.deltaTime);
 
-        } else if (backwards){
-       
+        } else if (backwards) {
+
             bar.transform.Translate(new Vector2(-1f, 0f) * barspeed * Time.deltaTime);
 
         }
@@ -139,22 +205,77 @@ public class CupGame : MonoBehaviour
         if (barX > rightBound)
         {
 
-            forwards = false; 
-            
+            forwards = false;
+
             backwards = true;
 
         }
 
-        if (start)
+        if (shuffling)
         {
+            if (cupsStopped())
+            {
 
-          cup1.transform.position = Vector2.MoveTowards(cup1.transform.position, cup1Target, 5f);
+                //if all cups are at thier destination switch them again
 
-            cup2.transform.position = Vector2.MoveTowards(cup2.transform.position, cup2Target, 5f);
+                switch ((int)Random.Range(1, 3))
+                {
 
-            cup3.transform.position = Vector2.MoveTowards(cup3.transform.position, cup3Target, 5f);
+                    case 1:
+                        SwitchCups(cup1, cup2, ref cup1Target, ref cup2Target);
+
+                        break;
+
+                    case 2:
+                        SwitchCups(cup3, cup2, ref cup3Target, ref cup2Target);
+
+                        break;
+
+                    case 3:
+                        SwitchCups(cup1, cup3, ref cup1Target, ref cup3Target);
+
+                        break;
+
+                }
+
+            }
 
         }
+
+        //move the cups to thier target.
+
+        cup1.transform.position = Vector2.MoveTowards(cup1.transform.position, cup1Target, cupSpeed);
+
+        cup2.transform.position = Vector2.MoveTowards(cup2.transform.position, cup2Target, cupSpeed);
+
+        cup3.transform.position = Vector2.MoveTowards(cup3.transform.position, cup3Target, cupSpeed);
+
+
+
+    }
+
+    public void Lift(GameObject cup, ref Vector2 cupTarget, float height) {
+
+        cupTarget = new Vector2(cup.transform.position.x, cup.transform.position.y + height);
+
+    }
+
+    public void Fall(GameObject cup, ref Vector2 cupTarget, float height)
+    {
+
+        cupTarget = new Vector2(cup.transform.position.x, cup.transform.position.y - height);
+
+    }
+
+    public bool IsAtTarget(GameObject cup, ref Vector2 cupTarget, float threshold) {
+        //checks if the cup has reached its destination 
+        if (Vector2.Distance(cup.transform.position, cupTarget) < threshold) {
+
+            return true;
+
+        }
+
+        return false;
 
     }
 
@@ -165,5 +286,32 @@ public class CupGame : MonoBehaviour
         cup2target = cup1.transform.position;
 
     }
+
+    public string Status() {
+
+        if (greenBarCollisionHandler.Status())
+        {
+
+            return "green";
+
+        }
+
+        if (yellowBarCollisionHandler.Status()) {
+
+            return "yellow";
+
+        }
+
+        return "red";
+
+    }
+
+    public bool cupsStopped(){
+
+        return IsAtTarget(cup1, ref cup1Target, 0.1f) &&
+         IsAtTarget(cup2, ref cup2Target, 0.1f) &&
+         IsAtTarget(cup3, ref cup3Target, 0.1f);
+
+        }
 
 }
