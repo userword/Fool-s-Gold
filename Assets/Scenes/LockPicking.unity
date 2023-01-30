@@ -349,7 +349,6 @@ GameObject:
   - component: {fileID: 738826092}
   - component: {fileID: 738826091}
   - component: {fileID: 738826090}
-  - component: {fileID: 738826094}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -439,19 +438,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &738826094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 738826089}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b035ff0164907b47860f79deb0b7f55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lockKeyPairs: []
 --- !u!1 &859116419
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,12 +490,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockKeyPairs:
-  - _ring: {fileID: 1955115697}
-    _key: {fileID: 2130790465}
-  - _ring: {fileID: 1113690264}
-    _key: {fileID: 185461070}
-  - _ring: {fileID: 1152964751}
-    _key: {fileID: 650786865}
+  - ring: {fileID: 1955115697}
+    key: {fileID: 2130790465}
+    angularVelocity: 360
+  - ring: {fileID: 1113690264}
+    key: {fileID: 185461070}
+    angularVelocity: 180
+  - ring: {fileID: 1152964751}
+    key: {fileID: 650786865}
+    angularVelocity: 90
+  timeBar: {fileID: 1979845363}
+  timeBarFillArea: {fileID: 1127944299}
+  totalTime: 10
+  cooldownTime: 1
+  angleAllowance: 10
 --- !u!1 &1113690262
 GameObject:
   m_ObjectHideFlags: 0
@@ -1018,7 +1012,7 @@ GameObject:
   - component: {fileID: 1979845362}
   - component: {fileID: 1979845363}
   m_Layer: 5
-  m_Name: CooldownBar
+  m_Name: TimeBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1044,7 +1038,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 30}
-  m_SizeDelta: {x: 40, y: 2}
+  m_SizeDelta: {x: 20, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1979845363
 MonoBehaviour:
