@@ -19,6 +19,7 @@ public class NoteObject: MonoBehaviour
         if (Input.GetKeyDown(buttonPress)){
             if (press){
                 gameObject.SetActive(false);
+                SweetTalking.instance.NoteHit();
             }
         }
         
@@ -29,8 +30,11 @@ public class NoteObject: MonoBehaviour
         }
     }
     private void OnTriggerExit2D (Collider2D other){
+        if (gameObject.activeSelf) {
         if (other.tag == "Activator"){
             press = false;
+            SweetTalking.instance.NoteMiss();
+        }
         }
     }
 }
