@@ -9,6 +9,9 @@ public class GameController : MonoBehaviour
 
     public GameObject cupGamePrefab;
 
+    public GameObject sweetTalkingMinigamePrefab;
+
+
     void Update()
     {
 
@@ -22,6 +25,13 @@ public class GameController : MonoBehaviour
         {
 
             Instantiate(cupGamePrefab);
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+
+            Instantiate(sweetTalkingMinigamePrefab);
 
         }
 
