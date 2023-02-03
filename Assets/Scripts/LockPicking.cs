@@ -51,6 +51,10 @@ public class LockPicking : MonoBehaviour, MiniGame
     private float cooldownClock;
     private bool gameEnded = true;
 
+    private void Start() {
+        Initalize(0);
+    }
+
     private void Update() 
     {
         if (gameEnded)
@@ -120,15 +124,17 @@ public class LockPicking : MonoBehaviour, MiniGame
         return Mathf.Abs(angle) <= 10f;
     }
 
-    private void OnWin()
+    public void OnWin()
     {
         gameEnded = true;
-        Debug.Log("You win!");
+        GameManager.Singleton.OnWin();
+        Destroy(gameObject);
     }
 
-    private void OnLoss()
+    public void OnLoss()
     {
         gameEnded = true;
-        Debug.Log("You lost!");
+        GameManager.Singleton.OnLoss();
+        Destroy(gameObject);
     }
 }
