@@ -95,7 +95,7 @@ public class LockPicking : MonoBehaviour, MiniGame
         }
     }
 
-    public void Initalize()
+    public void Initalize(int dieValue)
     {
         Initalize();
     }

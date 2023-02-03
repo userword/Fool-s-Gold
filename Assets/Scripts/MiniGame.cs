@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface MiniGame
 {
-    public void Initalize();
+    public void Initalize(int dieValue);
 }
