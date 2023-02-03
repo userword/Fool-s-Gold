@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class LockPicking : MonoBehaviour
+public class LockPicking : MonoBehaviour, MiniGame
 {
 
     [System.Serializable]
@@ -28,22 +28,31 @@ public class LockPicking : MonoBehaviour
         get => _currentIndex;
         set
         {
-            if (value >= 0 && value <= lockKeyPairs.Count)
+            if (value > _currentIndex)
             {
-                _currentIndex = value;
-                current.key.enabled = true;
+                if (value >= lockKeyPairs.Count)
+                    return;
+                for (int i = _currentIndex; i < value; i++)
+                    lockKeyPairs[i].key.enabled = false;
             }
-            else if (value < 0)
-                OnWin();
+            else if (value < _currentIndex)
+            {
+                if (value < 0)
+                {
+                    OnWin();
+                    return;
+                }
+            }
+            _currentIndex = value; // start the next key logically
+            current.key.enabled = true;
         }
     }
     private float totalClock;
     private float cooldownClock;
     private bool gameEnded = true;
 
-    private void Start() 
-    {
-        Initalize();
+    private void Start() {
+        Initalize(0);
     }
 
     private void Update() 
@@ -80,6 +89,7 @@ public class LockPicking : MonoBehaviour
             }
             else
             {
+                Initalize(false);
                 // the player failed to pick the ring
                 cooldownClock = cooldownTime;
                 // give the player some feedback
@@ -89,7 +99,12 @@ public class LockPicking : MonoBehaviour
         }
     }
 
-    private void Initalize()
+    public void Initalize(int dieValue)
+    {
+        Initalize();
+    }
+
+    private void Initalize(bool resetTime = true)
     {
         //Debug.Log(lockKeyPairs.Count);
         foreach (RingKeyPair lockKeyPair in lockKeyPairs)
@@ -99,7 +114,7 @@ public class LockPicking : MonoBehaviour
             lockKeyPair.ring.rectTransform.eulerAngles = rotation;
         }
         currentIndex = lockKeyPairs.Count - 1;
-        totalClock = totalTime;
+        if (resetTime) totalClock = totalTime;
         gameEnded = false;
     }
 
@@ -109,15 +124,17 @@ public class LockPicking : MonoBehaviour
         return Mathf.Abs(angle) <= 10f;
     }
 
-    private void OnWin()
+    public void OnWin()
     {
         gameEnded = true;
-        Debug.Log("You win!");
+        GameManager.Singleton.OnWin();
+        Destroy(gameObject);
     }
 
-    private void OnLoss()
+    public void OnLoss()
     {
         gameEnded = true;
-        Debug.Log("You lost!");
+        GameManager.Singleton.OnLoss();
+        Destroy(gameObject);
     }
 }
