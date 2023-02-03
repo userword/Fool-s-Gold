@@ -501,7 +501,7 @@ MonoBehaviour:
     angularVelocity: 90
   timeBar: {fileID: 1979845363}
   timeBarFillArea: {fileID: 1127944299}
-  totalTime: 10
+  totalTime: 15
   cooldownTime: 1
   angleAllowance: 10
 --- !u!1 &1113690262
