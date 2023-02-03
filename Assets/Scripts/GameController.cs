@@ -5,19 +5,23 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
 
+    public bool frozen = false;
+
     public GameObject dicePrefab;
+    public GameObject dicePrefabRef;
 
     public GameObject cupGamePrefab;
 
     public GameObject sweetTalkingMinigamePrefab;
-
 
     void Update()
     {
 
         if (Input.GetKeyDown(KeyCode.Q)){
 
-            Instantiate(dicePrefab);
+            dicePrefabRef = Instantiate(dicePrefab);
+
+            dicePrefabRef.transform.parent = this.transform;
 
         }
 
@@ -34,7 +38,6 @@ public class GameController : MonoBehaviour
             Instantiate(sweetTalkingMinigamePrefab);
 
         }
-
 
     }
 

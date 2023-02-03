@@ -14,14 +14,14 @@ public class DiceShooter : MonoBehaviour
 
     private void Awake()
     {
+
         Dice.SetActive(true);
 
         diceRB = Dice.GetComponent<Rigidbody2D>();
 
         floorBC = Floor.GetComponent<BoxCollider2D>();
 
-
-        diceRB.AddForce(new Vector2(150f, 0));
+        diceRB.AddForce(new Vector2(550f, 0));
 
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DiceRoller : MonoBehaviour
 {
@@ -33,7 +34,6 @@ public class DiceRoller : MonoBehaviour
         }
 
     }
-
     public int RollD6() {
 
         return (int)Random.Range(1, 6);
@@ -94,4 +94,5 @@ public class DiceRoller : MonoBehaviour
         }
 
     }
+
 }
