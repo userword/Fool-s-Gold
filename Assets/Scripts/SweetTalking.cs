@@ -10,6 +10,10 @@ public class SweetTalking : MonoBehaviour
     public float score;
     public int miss = 0;
     public SpriteRenderer WinBar;
+    private bool[] HiHat = new bool [20];
+    private bool[] Drum = new bool [20];
+    private bool[] Bass = new bool [20];
+    
 
     public static SweetTalking instance;
     // Start is called before the first frame update
@@ -17,6 +21,16 @@ public class SweetTalking : MonoBehaviour
     {
         instance = this;
         WinBar.drawMode = SpriteDrawMode.Sliced;
+        for (int i = 0; i <20; i++){
+            HiHat[i] = (Random.Range(0,2) != 0);
+            Drum[i] = (Random.Range(0,2) != 0);
+            Bass[i] = (Random.Range(0,2) != 0);
+        }
+         for (int i = 0; i <20; i++){
+            Debug.Log(HiHat[i]);
+            Debug.Log(Drum[i]);
+            Debug.Log(Bass[i]);
+        }
     }
 
     // Update is called once per frame
