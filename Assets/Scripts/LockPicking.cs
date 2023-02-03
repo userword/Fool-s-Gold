@@ -15,13 +15,13 @@ public class LockPicking : MonoBehaviour, MiniGame
         public float angularVelocity = 90f;
     }
 
-    [SerializeField] private List<RingKeyPair> lockKeyPairs;
+    [SerializeField] private List<RingKeyPair> ringKeyPairs;
     [SerializeField] private Slider timeBar;
     [SerializeField] private Image timeBarFillArea;
     [SerializeField] private float totalTime = 10f;
     [SerializeField] private float cooldownTime = 1f;
     [SerializeField] private float angleAllowance = 10f;
-    private RingKeyPair current => lockKeyPairs[_currentIndex];
+    private RingKeyPair current => ringKeyPairs[_currentIndex];
     private int _currentIndex;
     private int currentIndex
     {
@@ -30,10 +30,10 @@ public class LockPicking : MonoBehaviour, MiniGame
         {
             if (value > _currentIndex)
             {
-                if (value >= lockKeyPairs.Count)
+                if (value >= ringKeyPairs.Count)
                     return;
                 for (int i = _currentIndex; i < value; i++)
-                    lockKeyPairs[i].key.enabled = false;
+                    ringKeyPairs[i].key.enabled = false;
             }
             else if (value < _currentIndex)
             {
@@ -52,7 +52,7 @@ public class LockPicking : MonoBehaviour, MiniGame
     private bool gameEnded = true;
 
     private void Start() {
-        Initalize(0);
+        Initalize(6);
     }
 
     private void Update() 
@@ -101,19 +101,25 @@ public class LockPicking : MonoBehaviour, MiniGame
 
     public void Initalize(int dieValue)
     {
+        float mutliplier = (dieValue - 3) / 6f;
+        foreach (RingKeyPair ringKeyPair in ringKeyPairs)
+        {
+            float velocityDelta = ringKeyPair.angularVelocity * mutliplier;
+            ringKeyPair.angularVelocity += velocityDelta;
+        }
         Initalize();
     }
 
     private void Initalize(bool resetTime = true)
     {
         //Debug.Log(lockKeyPairs.Count);
-        foreach (RingKeyPair lockKeyPair in lockKeyPairs)
+        foreach (RingKeyPair lockKeyPair in ringKeyPairs)
         {
             lockKeyPair.key.enabled = false;
             Vector3 rotation = Vector3.forward * Random.Range(0f, 360f);
             lockKeyPair.ring.rectTransform.eulerAngles = rotation;
         }
-        currentIndex = lockKeyPairs.Count - 1;
+        currentIndex = ringKeyPairs.Count - 1;
         if (resetTime) totalClock = totalTime;
         gameEnded = false;
     }

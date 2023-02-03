@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b035ff0164907b47860f79deb0b7f55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lockKeyPairs:
+  ringKeyPairs:
   - ring: {fileID: 7185277440423034837}
     key: {fileID: 7185277440313460005}
     angularVelocity: 360
