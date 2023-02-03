@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class LockPicking : MonoBehaviour
+public class LockPicking : MonoBehaviour, MiniGame
 {
 
     [System.Serializable]
@@ -15,35 +15,44 @@ public class LockPicking : MonoBehaviour
         public float angularVelocity = 90f;
     }
 
-    [SerializeField] private List<RingKeyPair> lockKeyPairs;
+    [SerializeField] private List<RingKeyPair> ringKeyPairs;
     [SerializeField] private Slider timeBar;
     [SerializeField] private Image timeBarFillArea;
     [SerializeField] private float totalTime = 10f;
     [SerializeField] private float cooldownTime = 1f;
     [SerializeField] private float angleAllowance = 10f;
-    private RingKeyPair current => lockKeyPairs[_currentIndex];
+    private RingKeyPair current => ringKeyPairs[_currentIndex];
     private int _currentIndex;
     private int currentIndex
     {
         get => _currentIndex;
         set
         {
-            if (value >= 0 && value <= lockKeyPairs.Count)
+            if (value > _currentIndex)
             {
-                _currentIndex = value;
-                current.key.enabled = true;
+                if (value >= ringKeyPairs.Count)
+                    return;
+                for (int i = _currentIndex; i < value; i++)
+                    ringKeyPairs[i].key.enabled = false;
             }
-            else if (value < 0)
-                OnWin();
+            else if (value < _currentIndex)
+            {
+                if (value < 0)
+                {
+                    OnWin();
+                    return;
+                }
+            }
+            _currentIndex = value; // start the next key logically
+            current.key.enabled = true;
         }
     }
     private float totalClock;
     private float cooldownClock;
     private bool gameEnded = true;
 
-    private void Start() 
-    {
-        Initalize();
+    private void Start() {
+        Initalize(6);
     }
 
     private void Update() 
@@ -80,6 +89,7 @@ public class LockPicking : MonoBehaviour
             }
             else
             {
+                Initalize(false);
                 // the player failed to pick the ring
                 cooldownClock = cooldownTime;
                 // give the player some feedback
@@ -89,17 +99,28 @@ public class LockPicking : MonoBehaviour
         }
     }
 
-    private void Initalize()
+    public void Initalize(int dieValue)
+    {
+        float mutliplier = (dieValue - 3) / 6f;
+        foreach (RingKeyPair ringKeyPair in ringKeyPairs)
+        {
+            float velocityDelta = ringKeyPair.angularVelocity * mutliplier;
+            ringKeyPair.angularVelocity += velocityDelta;
+        }
+        Initalize();
+    }
+
+    private void Initalize(bool resetTime = true)
     {
         //Debug.Log(lockKeyPairs.Count);
-        foreach (RingKeyPair lockKeyPair in lockKeyPairs)
+        foreach (RingKeyPair lockKeyPair in ringKeyPairs)
         {
             lockKeyPair.key.enabled = false;
             Vector3 rotation = Vector3.forward * Random.Range(0f, 360f);
             lockKeyPair.ring.rectTransform.eulerAngles = rotation;
         }
-        currentIndex = lockKeyPairs.Count - 1;
-        totalClock = totalTime;
+        currentIndex = ringKeyPairs.Count - 1;
+        if (resetTime) totalClock = totalTime;
         gameEnded = false;
     }
 
@@ -109,15 +130,17 @@ public class LockPicking : MonoBehaviour
         return Mathf.Abs(angle) <= 10f;
     }
 
-    private void OnWin()
+    public void OnWin()
     {
         gameEnded = true;
-        Debug.Log("You win!");
+        GameManager.Singleton.OnWin();
+        Destroy(gameObject);
     }
 
-    private void OnLoss()
+    public void OnLoss()
     {
         gameEnded = true;
-        Debug.Log("You lost!");
+        GameManager.Singleton.OnLoss();
+        Destroy(gameObject);
     }
 }
