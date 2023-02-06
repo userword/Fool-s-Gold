@@ -10,9 +10,15 @@ public class SweetTalking : MonoBehaviour
     public float score;
     public int miss = 0;
     public SpriteRenderer WinBar;
-    private bool[] HiHat = new bool [20];
-    private bool[] Drum = new bool [20];
-    private bool[] Bass = new bool [20];
+    private bool[] HiHat = new bool [10];
+    private bool[] Drum = new bool [10];
+    private bool[] Bass = new bool [10];
+    public Scroller notesA;
+    public Scroller notesS;
+    public Scroller notesSpace;
+    public GameObject NT;
+    
+    
     
 
     public static SweetTalking instance;
@@ -21,15 +27,33 @@ public class SweetTalking : MonoBehaviour
     {
         instance = this;
         WinBar.drawMode = SpriteDrawMode.Sliced;
-        for (int i = 0; i <20; i++){
+        for (int i = 0; i <10; i++){
             HiHat[i] = (Random.Range(0,2) != 0);
             Drum[i] = (Random.Range(0,2) != 0);
             Bass[i] = (Random.Range(0,2) != 0);
         }
-         for (int i = 0; i <20; i++){
+         for (int i = 0; i <10; i++){
             Debug.Log(HiHat[i]);
+            if (HiHat[i]){
+                float ypos = Random.Range(-2.6f,30f);
+                Vector3 AButton =  new Vector3(-1.77f, ypos +10.3614767f, 8.329795f);
+                Scroller newNoteA = Instantiate(notesA, AButton, Quaternion.identity);
+                newNoteA.transform.parent = NT.transform;
+            }
             Debug.Log(Drum[i]);
+            if (Drum[i]){
+                float ypos = Random.Range(-2.6f,30f);
+                Vector3 AButton =  new Vector3(0.1f, ypos +10.3614767f, 8.329795f);
+                Scroller newNoteS = Instantiate(notesS, AButton, Quaternion.identity);
+                newNoteS.transform.parent = NT.transform;
+            }
             Debug.Log(Bass[i]);
+            if (Bass[i]){
+                float ypos = Random.Range(-2.6f,30f);
+                Vector3 AButton =  new Vector3(2.4f, ypos +10.3614767f, 8.329795f);
+                Scroller newNoteSpace = Instantiate(notesSpace, AButton, Quaternion.identity);
+                newNoteSpace.transform.parent = NT.transform;
+            }
         }
     }
 
