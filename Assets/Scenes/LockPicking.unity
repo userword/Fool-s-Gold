@@ -478,15 +478,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7185277439444475617, guid: 07e480ea205dc43c686f1a09bc05bb6a, type: 3}
       propertyPath: ringKeyPairs.Array.data[0].angularVelocity
-      value: 180
+      value: 360
       objectReference: {fileID: 0}
     - target: {fileID: 7185277439444475617, guid: 07e480ea205dc43c686f1a09bc05bb6a, type: 3}
       propertyPath: ringKeyPairs.Array.data[1].angularVelocity
-      value: 90
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 7185277439444475617, guid: 07e480ea205dc43c686f1a09bc05bb6a, type: 3}
       propertyPath: ringKeyPairs.Array.data[2].angularVelocity
-      value: 45
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 7185277439444475623, guid: 07e480ea205dc43c686f1a09bc05bb6a, type: 3}
       propertyPath: m_Name
