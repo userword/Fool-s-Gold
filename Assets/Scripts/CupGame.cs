@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class CupGame : MonoBehaviour
 {
 
+    public Sprite cupTilted;
+
     public GameObject dice;
 
     public GameObject bar;
@@ -32,16 +34,21 @@ public class CupGame : MonoBehaviour
 
     float leftBound, rightBound;
 
-    bool forwards = false, backwards = false,
-        shuffling = false, started = false, chosen = false, show = false; // these booleans are supposed to track the different Mini game states
+    bool forwards = false, backwards = false, shuffling = false, started = false, chosen = false, show = false; // these booleans are supposed to track the different Mini game states
 
     private float barspeed = 100f;
 
     private float cupSpeed = 10f;
 
-    public GameObject cup1, cup2, cup3;
+    public GameObject cup1, cup2, cup3, pirateHand, playerHand;
 
-    private Vector2 cup1Target, cup2Target, cup3Target;
+    private Vector2 cup1Target, cup2Target, cup3Target, pirateTarget, playerTarget;
+
+    public enum GameState { 
+    
+        
+    
+    }
 
     void Awake()
     {
@@ -54,11 +61,15 @@ public class CupGame : MonoBehaviour
 
         cup3Target = cup3.transform.position;
 
+        playerTarget = playerHand.transform.position;
+
+        pirateTarget = pirateHand.transform.position;
+
         Debug.Log("Cup positions: \n" + cup1.transform.position + " " + cup2.transform.position + " " + cup3.transform.position);
 
         Debug.Log("Cup targets: \n" + cup1Target + " " + cup2Target + " " + cup3Target);
 
-        //get components
+        // Get components
 
         barRect = bar.GetComponent<RectTransform>();
 
@@ -98,13 +109,9 @@ public class CupGame : MonoBehaviour
 
         dice.transform.SetParent(cup2.transform);
 
-
-
         shuffling = true;
 
         forwards = true;
-
-
 
         Debug.Log("Cup positions: \n" + cup1.transform.position + " " + cup2.transform.position + " " + cup3.transform.position);
 
@@ -145,7 +152,32 @@ public class CupGame : MonoBehaviour
         
         }
 
-        if (chosen == true && show == true) { 
+        if (chosen == true && show == true) {
+            //if green the scam works
+
+            //if yellow the game plays with a 50/chance of winning or losing
+
+            //if red the player tries to pull off the scam but gets caught
+
+            switch (Status()) {
+
+                case "green":
+                    
+
+                    break;
+
+                case "yellow":
+
+
+                    break;
+
+                case "red":
+
+
+                    break;
+
+            }
+
 
             switch ((int)Random.Range(1, 3))
             {
@@ -175,6 +207,10 @@ public class CupGame : MonoBehaviour
         }
 
     }
+
+
+
+
 
     void FixedUpdate()
     {
