@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CupGame : MonoBehaviour
+public class CupGame : MonoBehaviour, MiniGame
 {
 
     public Sprite cupTilted;
+
+    public Sprite cupRegular;
 
     public GameObject dice;
 
@@ -50,8 +52,26 @@ public class CupGame : MonoBehaviour
     
     }
 
+    public void Initalize(int dieValue)
+    {
+        
+    }
+
+    public void OnWin()
+    {
+        //GameManager.Singleton.OnWin();
+        //Destroy(gameObject);
+    }
+
+    public void OnLoss()
+    {
+        //GameManager.Singleton.OnLoss();
+       // Destroy(gameObject);
+    }
+
     void Awake()
     {
+        Initalize(9);
 
         //keep cups in place
 
@@ -97,6 +117,8 @@ public class CupGame : MonoBehaviour
 
     IEnumerator ShowDice() {
 
+        Debug.Log("Showing Dice");
+
         started = true;
 
         Lift(cup2, ref cup2Target, 70f);
@@ -140,7 +162,6 @@ public class CupGame : MonoBehaviour
 
                 Debug.Log(Status());
 
-                dice.transform.SetParent(null);
 
             }
 
@@ -153,64 +174,117 @@ public class CupGame : MonoBehaviour
         }
 
         if (chosen == true && show == true) {
+
+            Debug.Log("chose");
+
+            show = false;
+
             //if green the scam works
 
             //if yellow the game plays with a 50/chance of winning or losing
 
             //if red the player tries to pull off the scam but gets caught
 
-            switch (Status()) {
+            switch (Status())
+            {
 
                 case "green":
-                    
+
+                    Debug.Log(Status());
+                    StartCoroutine(Yoink());
 
                     break;
 
                 case "yellow":
 
+                    Debug.Log(Status());
+                    StartCoroutine(pickRight());
 
                     break;
 
                 case "red":
-
-
-                    break;
-
-            }
-
-
-            switch ((int)Random.Range(1, 3))
-            {
-
-                case 1:
-                    Lift(cup1, ref cup1Target, 70f);
-                    
-
-                    break;
-
-                case 2:
-                    Lift(cup2, ref cup2Target, 70f);
-                    
-
-                    break;
-
-                case 3:
-                    Lift(cup3, ref cup3Target, 70f);
-                    
+                    Debug.Log(Status());
+                    StartCoroutine(pickWrong());
 
                     break;
 
             }
-
-            show = false;
-
         }
+
+    }
+    IEnumerator Yoink()
+    {
+
+        Debug.Log("Yoink");
+
+        playerTarget = cup2.transform.position;
+
+        cup2.GetComponent<Image>().sprite = cupTilted;
+
+        yield return new WaitUntil(() => Vector2.Distance(playerHand.transform.position, playerTarget) < 0.1f);
+
+        Debug.Log("Arrived");
+
+        Destroy(dice);
+
+        playerTarget = new Vector3(playerHand.transform.position.x, -100f, 0f);
+
+        yield return new WaitUntil(() => Vector2.Distance(playerHand.transform.position, playerTarget) < 0.1f);
+
+        StartCoroutine(pickRight());
 
     }
 
 
+    IEnumerator pickWrong() {
 
+        Debug.Log("Wrong");
 
+        pirateTarget = cup1.transform.position + new Vector3(0f, 1f, 0f);
+
+        yield return new WaitUntil(() => Vector2.Distance(pirateHand.transform.position, pirateTarget) < 0.1f);
+
+        Debug.Log("Arrived");
+
+        dice.transform.SetParent(this.transform);
+
+        cup1Target = cup1.transform.position + new Vector3(0f, 70f, 0f);
+
+        pirateTarget = pirateHand.transform.position + new Vector3(0f, 70f, 0f);
+
+        yield return new WaitUntil(() => Vector2.Distance(pirateHand.transform.position, pirateTarget) < 0.1f);
+
+        yield return new WaitForSeconds(3);
+
+        OnWin();
+
+        //Player W
+
+    }
+    IEnumerator pickRight()
+    {
+
+        Debug.Log("Right");
+
+        pirateTarget = cup2.transform.position + new Vector3(0f, 1f, 0f);
+
+        yield return new WaitUntil(() => Vector2.Distance(pirateHand.transform.position, pirateTarget) < 0.1f);
+
+        Debug.Log("Arrived");
+
+        dice.transform.SetParent(this.transform);
+
+        cup2Target = cup2.transform.position + new Vector3(0f, 70f, 0f);
+
+        pirateTarget = pirateHand.transform.position + new Vector3(0f, 70f, 0f);
+
+        yield return new WaitUntil(() => Vector2.Distance(pirateHand.transform.position, pirateTarget) < 0.1f);
+
+        yield return new WaitForSeconds(3);
+
+        OnWin();
+
+    }
 
     void FixedUpdate()
     {
@@ -249,6 +323,7 @@ public class CupGame : MonoBehaviour
 
         if (shuffling)
         {
+
             if (cupsStopped())
             {
 
@@ -286,7 +361,9 @@ public class CupGame : MonoBehaviour
 
         cup3.transform.position = Vector2.MoveTowards(cup3.transform.position, cup3Target, cupSpeed);
 
+        pirateHand.transform.position = Vector2.MoveTowards(pirateHand.transform.position, pirateTarget, cupSpeed);
 
+        playerHand.transform.position = Vector2.MoveTowards(playerHand.transform.position, playerTarget, cupSpeed);
 
     }
 
@@ -306,6 +383,8 @@ public class CupGame : MonoBehaviour
     public bool IsAtTarget(GameObject cup, ref Vector2 cupTarget, float threshold) {
         //checks if the cup has reached its destination 
         if (Vector2.Distance(cup.transform.position, cupTarget) < threshold) {
+
+
 
             return true;
 
