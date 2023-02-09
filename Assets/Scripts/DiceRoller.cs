@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DiceRoller : MonoBehaviour
 {
 
     int current;
+
+    int numBounces = 0;
 
     public Sprite D1, D2, D3, D4, D5, D6;
 
@@ -13,7 +16,10 @@ public class DiceRoller : MonoBehaviour
 
     Rigidbody2D rb;
 
-    void Start() {
+    Vector3 EndPos = new Vector3 (0f, 2.5f, 0f);
+    Quaternion EndRotaion = new Quaternion(0f, 0f, 0f, 0f);
+
+    void Awake() {
 
         current = RollD6();
 
@@ -26,10 +32,25 @@ public class DiceRoller : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (collision.gameObject.name == "Floor") {
+        if (collision.gameObject.name == "Floor")
+            {
 
-            current = RollD6Exclusive(current);
-        
+            if (numBounces < 6)
+            {
+
+                current = RollD6Exclusive(current);
+
+                numBounces++;
+
+
+            } else {
+
+                rb.simulated = false;
+
+
+
+            
+            }
         }
 
     }
@@ -93,5 +114,14 @@ public class DiceRoller : MonoBehaviour
 
         }
 
+        if (!rb.simulated) {
+
+            transform.position = Vector2.MoveTowards(transform.position, EndPos, 0.01f);
+
+            transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
+
+        }
+
     }
+
 }
