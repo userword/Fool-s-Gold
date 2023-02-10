@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
 
     Vector2 moveDirection;
 
+    public Animator animator;
+
     private void FixedUpdate()
     {
 
@@ -20,6 +22,19 @@ public class PlayerMovement : MonoBehaviour
     {
 
         HandleSelectionInputs();
+
+        /*
+        if (rb.velocity.x > 0.1 || rb.velocity.y > 0.1)
+        {
+
+            animator.Play("MC_move");
+
+        }
+        else {
+
+            animator.Play("Still");
+
+        }*/
 
     }
     private void HandleSelectionInputs()
@@ -31,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = new Vector2(moveX, moveY);
 
     }
+
 
     private void Move()
     {
