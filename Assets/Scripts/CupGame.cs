@@ -66,7 +66,7 @@ public class CupGame : MonoBehaviour, MiniGame
     public void OnLoss()
     {
         //GameManager.Singleton.OnLoss();
-       // Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
     void Awake()
