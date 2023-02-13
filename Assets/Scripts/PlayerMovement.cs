@@ -23,18 +23,7 @@ public class PlayerMovement : MonoBehaviour
 
         HandleSelectionInputs();
 
-        /*
-        if (rb.velocity.x > 0.1 || rb.velocity.y > 0.1)
-        {
-
-            animator.Play("MC_move");
-
-        }
-        else {
-
-            animator.Play("Still");
-
-        }*/
+        animator.SetFloat("Movespeed", rb.velocity.sqrMagnitude);
 
     }
     private void HandleSelectionInputs()
