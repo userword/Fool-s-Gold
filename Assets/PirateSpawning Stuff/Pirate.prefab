@@ -305,6 +305,7 @@ GameObject:
   - component: {fileID: 1781199780973902325}
   - component: {fileID: 2240730528959850816}
   - component: {fileID: 281731850885304505}
+  - component: {fileID: 7764928874246855663}
   m_Layer: 0
   m_Name: Sight
   m_TagString: Untagged
@@ -389,7 +390,7 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -407,6 +408,20 @@ PolygonCollider2D:
     - - {x: 0, y: 0.5773587}
       - {x: -0.5, y: -0.28866667}
       - {x: 0.5, y: -0.28866667}
+--- !u!114 &7764928874246855663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769539892755070767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2fc6bb2a7afa3d4aa87543c1bf97eac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetPos: {x: 0, y: 0}
+  found: 0
 --- !u!1 &5020793026285532573
 GameObject:
   m_ObjectHideFlags: 0
@@ -840,6 +855,7 @@ MonoBehaviour:
   rightCollision: {fileID: 8026934283626180571}
   upperCollision: {fileID: 8433288545746828516}
   lowerCollision: {fileID: 3581746174170663386}
+  sightHandler: {fileID: 7764928874246855663}
   sightTransform: {fileID: 1741444773714286776}
 --- !u!61 &1649083404766295289
 BoxCollider2D:

@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class PirateController : MonoBehaviour
 {
-
+    public enum pirateState { 
+    
+    WANDERING, SEARCHING, CHASING
+    
+    }
     public enum direction { 
     
     UP, DOWN, LEFT, RIGHT
@@ -12,6 +16,8 @@ public class PirateController : MonoBehaviour
     }
 
     private direction movementDirection;
+
+    private pirateState state;
 
     private float speed = 1;
 
@@ -25,6 +31,8 @@ public class PirateController : MonoBehaviour
 
     public BuildingColliderHandler lowerCollision;
 
+    public PirateSightHandler sightHandler;
+
     public Transform sightTransform;
 
 
@@ -35,33 +43,39 @@ public class PirateController : MonoBehaviour
 
         SetDirecton(direction.LEFT);
 
+        state = pirateState.WANDERING;
+
     }
     void Update()
     {
 
-        if (rightCollision.contact == true && movementDirection == direction.RIGHT) {
+        if (sightHandler.found) {
 
-            SetDirecton(direction.UP);
+            state = pirateState.CHASING;
+
+        } 
+
+        if (state == pirateState.WANDERING) {
+
+            TurnAwayFromWall();
 
         }
 
-        if (leftCollision.contact == true && movementDirection == direction.LEFT) {
-
-            SetDirecton(direction.DOWN);
-
-        }
-
-        if (upperCollision.contact == true && movementDirection == direction.UP)
+        if (state == pirateState.SEARCHING)
         {
 
-            SetDirecton(direction.LEFT);
+            TurnAwayFromWall();
 
         }
 
-        if (lowerCollision.contact == true && movementDirection == direction.DOWN)
+        if (state == pirateState.CHASING)
         {
 
-            SetDirecton(direction.RIGHT);
+            movement = (sightHandler.TargetPos - (Vector2)transform.position).normalized;
+
+            float angle = Vector2.Angle((Vector2)transform.position, sightHandler.TargetPos);
+
+            sightTransform.eulerAngles = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle));
 
         }
 
@@ -111,6 +125,75 @@ public class PirateController : MonoBehaviour
                 movement = new Vector3(1, 0, 0);
 
                 break;
+
+        }
+
+    }
+
+    public void TurnAwayFromWall() {
+
+        if (rightCollision.contact == true && movementDirection == direction.RIGHT)
+        {
+
+            if (Random.Range(0, 2) == 0) {
+
+                SetDirecton(direction.UP);
+
+            }
+            else
+            {
+
+                SetDirecton(direction.DOWN);
+            }
+
+        }
+
+        if (leftCollision.contact == true && movementDirection == direction.LEFT)
+        {
+
+            if (Random.Range(0, 2) == 0)
+            {
+
+                SetDirecton(direction.DOWN);
+
+            } else {
+
+                SetDirecton(direction.UP);
+
+            }
+
+        }
+
+        if (upperCollision.contact == true && movementDirection == direction.UP)
+        {
+
+            if (Random.Range(0, 2) == 0)
+            {
+
+                SetDirecton(direction.LEFT);
+
+            } else {
+
+                SetDirecton(direction.RIGHT);
+            }
+
+        }
+
+        if (lowerCollision.contact == true && movementDirection == direction.DOWN)
+        {
+
+            if (Random.Range(0, 2) == 0)
+            {
+
+                SetDirecton(direction.RIGHT);
+
+            }
+            else
+            {
+                SetDirecton(direction.LEFT);
+
+
+            }
 
         }
 

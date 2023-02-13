@@ -21,21 +21,17 @@ public class BuildingColliderHandler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
-            if (collision.gameObject.TryGetComponent(out Rigidbody2D rb2D)) 
+
+        if (collision.gameObject.TryGetComponent(out Rigidbody2D rb2D))
+        {
+            if (rb2D.bodyType == RigidbodyType2D.Static)
             {
 
-                if (rb2D.bodyType == RigidbodyType2D.Static) { 
-
-                    contact = true;
-
-                    Pause();
-
-                }
+                contact = true;
+                Pause();
 
             }
-        
-
+        }
     }
 
     IEnumerator Pause(){
