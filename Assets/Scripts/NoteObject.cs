@@ -33,6 +33,7 @@ public class NoteObject: MonoBehaviour
         if (gameObject.activeSelf) {
         if (other.tag == "Activator"){
             press = false;
+            gameObject.SetActive(false);
             SweetTalking.instance.NoteMiss();
         }
         }
