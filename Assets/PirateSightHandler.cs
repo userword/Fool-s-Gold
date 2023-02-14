@@ -7,6 +7,9 @@ public class PirateSightHandler : MonoBehaviour
 
     public Vector2 TargetPos;
 
+    public Transform targetTransform;
+
+
     public bool found;
     void Start()
     {
@@ -25,7 +28,9 @@ public class PirateSightHandler : MonoBehaviour
         if (collision.gameObject.name == "PlayerParent")
         {
 
-            TargetPos = gameObject.transform.position;
+            TargetPos = collision.gameObject.transform.position;
+
+            targetTransform = collision.gameObject.transform;
 
             found = true;
 
@@ -38,8 +43,6 @@ public class PirateSightHandler : MonoBehaviour
 
         if (collision.gameObject.name == "PlayerParent")
         {
-
-            TargetPos = Vector2.zero;
 
             found = false;
 

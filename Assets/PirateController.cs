@@ -35,13 +35,10 @@ public class PirateController : MonoBehaviour
 
     public Transform sightTransform;
 
-
     void Awake()
     {
 
-        movement = new Vector3(0, 0, 0);
-
-        SetDirecton(direction.LEFT);
+        SetDirecton(direction.UP);
 
         state = pirateState.WANDERING;
 
@@ -49,11 +46,16 @@ public class PirateController : MonoBehaviour
     void Update()
     {
 
-        if (sightHandler.found) {
+        if (sightHandler.found)
+        {
 
             state = pirateState.CHASING;
 
-        } 
+        } else {
+
+            state = pirateState.WANDERING;
+        
+        }
 
         if (state == pirateState.WANDERING) {
 
@@ -71,11 +73,16 @@ public class PirateController : MonoBehaviour
         if (state == pirateState.CHASING)
         {
 
+
             movement = (sightHandler.TargetPos - (Vector2)transform.position).normalized;
 
-            float angle = Vector2.Angle((Vector2)transform.position, sightHandler.TargetPos);
+            Debug.Log("Target vector: " + sightHandler.TargetPos);
 
-            sightTransform.eulerAngles = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle));
+            Debug.Log("Pirate vector: " + transform.position);
+
+            Debug.Log("movment vector: " + movement);
+
+            sightTransform.right = sightHandler.TargetPos - (Vector2)transform.position;
 
         }
 
@@ -114,7 +121,7 @@ public class PirateController : MonoBehaviour
 
                 movement = new Vector3(-1, 0, 0);
 
-                sightTransform.eulerAngles = new Vector3(0f, 0f, 1800f);
+                sightTransform.eulerAngles = new Vector3(0f, 0f, 180f);
 
                 break;
 
