@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class PirateController : MonoBehaviour
 {
-
+    public enum pirateState { 
+    
+    WANDERING, SEARCHING, CHASING
+    
+    }
     public enum direction { 
     
     UP, DOWN, LEFT, RIGHT
@@ -12,6 +16,8 @@ public class PirateController : MonoBehaviour
     }
 
     private direction movementDirection;
+
+    private pirateState state;
 
     private float speed = 1;
 
@@ -25,43 +31,58 @@ public class PirateController : MonoBehaviour
 
     public BuildingColliderHandler lowerCollision;
 
-    public Transform sightTransform;
+    public PirateSightHandler sightHandler;
 
+    public Transform sightTransform;
 
     void Awake()
     {
 
-        movement = new Vector3(0, 0, 0);
+        SetDirecton(direction.UP);
 
-        SetDirecton(direction.LEFT);
+        state = pirateState.WANDERING;
 
     }
     void Update()
     {
 
-        if (rightCollision.contact == true && movementDirection == direction.RIGHT) {
-
-            SetDirecton(direction.UP);
-
-        }
-
-        if (leftCollision.contact == true && movementDirection == direction.LEFT) {
-
-            SetDirecton(direction.DOWN);
-
-        }
-
-        if (upperCollision.contact == true && movementDirection == direction.UP)
+        if (sightHandler.found)
         {
 
-            SetDirecton(direction.LEFT);
+            state = pirateState.CHASING;
+
+        } else {
+
+            state = pirateState.WANDERING;
+        
+        }
+
+        if (state == pirateState.WANDERING) {
+
+            TurnAwayFromWall();
 
         }
 
-        if (lowerCollision.contact == true && movementDirection == direction.DOWN)
+        if (state == pirateState.SEARCHING)
         {
 
-            SetDirecton(direction.RIGHT);
+            TurnAwayFromWall();
+
+        }
+
+        if (state == pirateState.CHASING)
+        {
+
+
+            movement = (sightHandler.TargetPos - (Vector2)transform.position).normalized;
+
+            Debug.Log("Target vector: " + sightHandler.TargetPos);
+
+            Debug.Log("Pirate vector: " + transform.position);
+
+            Debug.Log("movment vector: " + movement);
+
+            sightTransform.right = sightHandler.TargetPos - (Vector2)transform.position;
 
         }
 
@@ -100,7 +121,7 @@ public class PirateController : MonoBehaviour
 
                 movement = new Vector3(-1, 0, 0);
 
-                sightTransform.eulerAngles = new Vector3(0f, 0f, 1800f);
+                sightTransform.eulerAngles = new Vector3(0f, 0f, 180f);
 
                 break;
 
@@ -111,6 +132,75 @@ public class PirateController : MonoBehaviour
                 movement = new Vector3(1, 0, 0);
 
                 break;
+
+        }
+
+    }
+
+    public void TurnAwayFromWall() {
+
+        if (rightCollision.contact == true && movementDirection == direction.RIGHT)
+        {
+
+            if (Random.Range(0, 2) == 0) {
+
+                SetDirecton(direction.UP);
+
+            }
+            else
+            {
+
+                SetDirecton(direction.DOWN);
+            }
+
+        }
+
+        if (leftCollision.contact == true && movementDirection == direction.LEFT)
+        {
+
+            if (Random.Range(0, 2) == 0)
+            {
+
+                SetDirecton(direction.DOWN);
+
+            } else {
+
+                SetDirecton(direction.UP);
+
+            }
+
+        }
+
+        if (upperCollision.contact == true && movementDirection == direction.UP)
+        {
+
+            if (Random.Range(0, 2) == 0)
+            {
+
+                SetDirecton(direction.LEFT);
+
+            } else {
+
+                SetDirecton(direction.RIGHT);
+            }
+
+        }
+
+        if (lowerCollision.contact == true && movementDirection == direction.DOWN)
+        {
+
+            if (Random.Range(0, 2) == 0)
+            {
+
+                SetDirecton(direction.RIGHT);
+
+            }
+            else
+            {
+                SetDirecton(direction.LEFT);
+
+
+            }
 
         }
 

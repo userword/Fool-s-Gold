@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using UnityEngine.UI;
 
 public class CupGame : MonoBehaviour, MiniGame
@@ -66,7 +67,7 @@ public class CupGame : MonoBehaviour, MiniGame
     public void OnLoss()
     {
         //GameManager.Singleton.OnLoss();
-       // Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
     void Awake()
@@ -214,12 +215,15 @@ public class CupGame : MonoBehaviour, MiniGame
     }
     IEnumerator Yoink()
     {
+        // player win
 
         Debug.Log("Yoink");
 
         playerTarget = cup2.transform.position;
 
         cup2.GetComponent<Image>().sprite = cupTilted;
+
+        dice.GetComponent<Canvas>().sortingOrder = 30;
 
         yield return new WaitUntil(() => Vector2.Distance(playerHand.transform.position, playerTarget) < 0.1f);
 
@@ -252,7 +256,7 @@ public class CupGame : MonoBehaviour, MiniGame
 
         pirateTarget = pirateHand.transform.position + new Vector3(0f, 70f, 0f);
 
-        yield return new WaitUntil(() => Vector2.Distance(pirateHand.transform.position, pirateTarget) < 0.1f);
+        yield return new WaitUntil(() => Vector2.Distance(pirateHand.transform.position, pirateTarget) == 0f);
 
         yield return new WaitForSeconds(3);
 
@@ -266,19 +270,25 @@ public class CupGame : MonoBehaviour, MiniGame
 
         Debug.Log("Right");
 
-        pirateTarget = cup2.transform.position + new Vector3(0f, 1f, 0f);
+        pirateTarget = cup2.transform.position + new Vector3(0f, 20f, 0f);
 
-        yield return new WaitUntil(() => Vector2.Distance(pirateHand.transform.position, pirateTarget) < 0.1f);
+        yield return new WaitUntil(() => Vector2.Distance(pirateHand.transform.position, pirateTarget) == 0f);
 
-        Debug.Log("Arrived");
+        Debug.Log("Arrived. PiratePos: " + pirateHand.transform.position + " TargetPos: " + pirateTarget );
 
-        dice.transform.SetParent(this.transform);
+        try {
+            dice.transform.SetParent(null);
+        } catch (Exception e) { 
+        
+        }
 
         cup2Target = cup2.transform.position + new Vector3(0f, 70f, 0f);
 
         pirateTarget = pirateHand.transform.position + new Vector3(0f, 70f, 0f);
 
-        yield return new WaitUntil(() => Vector2.Distance(pirateHand.transform.position, pirateTarget) < 0.1f);
+        yield return new WaitUntil(() => Vector2.Distance(pirateHand.transform.position, pirateTarget) == 0f);
+
+        Debug.Log("Arrived. PiratePos: " + pirateHand.transform.position + " TargetPos: " + pirateTarget);
 
         yield return new WaitForSeconds(3);
 
@@ -329,7 +339,7 @@ public class CupGame : MonoBehaviour, MiniGame
 
                 //if all cups are at thier destination switch them again
 
-                switch ((int)Random.Range(1, 3))
+                switch ((int)UnityEngine.Random.Range(1, 3))
                 {
 
                     case 1:
