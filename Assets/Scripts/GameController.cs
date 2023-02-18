@@ -7,17 +7,22 @@ public class GameController : MonoBehaviour
 
     public bool frozen = false;
 
+    public int currentRoll;
+
     public GameObject dicePrefab;
+
     public GameObject dicePrefabRef;
 
     public GameObject cupGamePrefab;
+
+    public GameObject cupGame;
 
     public GameObject sweetTalkingMinigamePrefab;
 
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Q)){
+        if (Input.GetKeyDown(KeyCode.Q)) {
 
             dicePrefabRef = Instantiate(dicePrefab);
 
@@ -28,7 +33,7 @@ public class GameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W))
         {
 
-            Instantiate(cupGamePrefab);
+            StartCoroutine(PlayCupGame());
 
         }
 
@@ -40,5 +45,33 @@ public class GameController : MonoBehaviour
         }
 
     }
+
+    public void RollDice() {
+
+        dicePrefabRef = Instantiate(dicePrefab);
+
+        dicePrefabRef.transform.parent = this.transform;
+
+        dicePrefabRef.GetComponent<DiceShooter>().Play();
+
+    }
+
+    public IEnumerator PlayCupGame() {
+
+        RollDice();
+
+        yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final != 7);
+
+        cupGame = Instantiate(cupGamePrefab);
+
+        currentRoll = dicePrefabRef.GetComponentInChildren<DiceRoller>().final;
+
+        cupGame.GetComponent<CupGame>().Initalize(currentRoll);
+
+    }
+    public void PlayLockpickingGame() { }
+    public void PlaySweetTalkinGame() { }
+    public void PlayPickpocketingGame() { }
+
 
 }

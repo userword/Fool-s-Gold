@@ -8,6 +8,8 @@ public class DiceRoller : MonoBehaviour
 
     int current;
 
+    public int final = 7; 
+
     int numBounces = 0;
 
     public Sprite D1, D2, D3, D4, D5, D6;
@@ -16,7 +18,7 @@ public class DiceRoller : MonoBehaviour
 
     Rigidbody2D rb;
 
-    Vector3 EndPos = new Vector3 (0f, 2.5f, 0f);
+    Vector3 EndPos = new Vector3 (0f, 4f, 0f);
     Quaternion EndRotaion = new Quaternion(0f, 0f, 0f, 0f);
 
     void Awake() {
@@ -46,9 +48,6 @@ public class DiceRoller : MonoBehaviour
             } else {
 
                 rb.simulated = false;
-
-
-
             
             }
         }
@@ -119,6 +118,12 @@ public class DiceRoller : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, EndPos, 0.01f);
 
             transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
+
+        }
+
+        if (Vector2.Distance(transform.position, EndPos) < 0.1f) {
+
+            final = current;
 
         }
 

@@ -102,11 +102,15 @@ public class LockPicking : MonoBehaviour, MiniGame
     public void Initalize(int dieValue)
     {
         float mutliplier = (dieValue - 3) / 6f;
+
         foreach (RingKeyPair ringKeyPair in ringKeyPairs)
         {
+
             float velocityDelta = ringKeyPair.angularVelocity * mutliplier;
             ringKeyPair.angularVelocity += velocityDelta;
+
         }
+
         Initalize();
     }
 

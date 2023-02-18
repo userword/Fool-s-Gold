@@ -13,10 +13,19 @@ public class PlayerMovement : MonoBehaviour
 
     public Animator animator;
 
+    private List<Scammable> avalibleScams;
+
+    Scammable chosenScam;
+
     private void FixedUpdate()
     {
 
         Move();
+    }
+
+    private void Awake()
+    {
+
     }
     private void Update()
     {
@@ -35,13 +44,49 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = new Vector2(moveX, moveY);
 
     }
-
-
     private void Move()
     {
 
         rb.velocity = new Vector2(moveDirection.x * movespeed, moveDirection.y * movespeed);
         
     }
+
+    public void ExecuteScam()
+    {
+
+        chosenScam.Go();
+
+    }
+
+    public void ChooseClosestScam() {
+
+        foreach (Scammable scam in avalibleScams)
+        {
+
+            if (scam.distanceToPlayer <= chosenScam.distanceToPlayer)
+            {
+
+                chosenScam = scam;
+
+            }
+
+        }
+
+    }
+
+    public void RegisterScam(Scammable scam)
+    {
+
+        avalibleScams.Add(scam);
+
+    }
+
+    public void DeclineScam(Scammable scam)
+    {
+
+        avalibleScams.Remove(scam);
+
+    }
+
 
 }
