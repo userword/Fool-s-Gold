@@ -36,7 +36,6 @@ public class SweetTalking : MonoBehaviour, MiniGame{
         // scoreText.text = "Score: " + score;
         // NeedText.text = "Needed To Wind: " + NeedScore;
         // missesAllowed.text = "Misses Allowed: " + miss;
-        NT.BPM = (dieValue);
         instance = this;
         for (int i = 0; i <10; i++){
             HiHat[i] = (Random.Range(0,2) != 0);
@@ -71,9 +70,12 @@ public class SweetTalking : MonoBehaviour, MiniGame{
             }
             ypos+=2.5f;
         }
+        int Totalnotes = (int) NeedScore;
         NeedScore *= (dieValue/4f);
         NeedScore = 60 * NeedScore;
         Debug.Log("NeedScore: " + NeedScore);
+        Debug.Log("Total Notes: " + Totalnotes);
+        NT.BPM = (dieValue);
     }
 
     // Update is called once per frame
@@ -89,7 +91,7 @@ public class SweetTalking : MonoBehaviour, MiniGame{
                 musicPlay.Play();
             }
         }
-        if (miss == 5){
+        if (miss == 10){
             NT.BPM = 0;
             OnLoss();
             return;
