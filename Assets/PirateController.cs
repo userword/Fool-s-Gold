@@ -6,7 +6,7 @@ public class PirateController : MonoBehaviour
 {
     public enum pirateState { 
     
-    WANDERING, SEARCHING, CHASING
+    WANDERING, SEARCHING, CHASING, CHATTING, DRUNK, CARRYING
     
     }
     public enum direction { 
@@ -46,20 +46,55 @@ public class PirateController : MonoBehaviour
     void Update()
     {
 
-        if (sightHandler.found)
+        switch (state)
         {
 
-            state = pirateState.CHASING;
+            case pirateState.WANDERING:
+                TurnAwayFromWall();
 
-        } else {
+                break;
 
-            state = pirateState.WANDERING;
-        
+            case pirateState.SEARCHING:
+
+                TurnAwayFromWall();
+
+                if (sightHandler.found)
+                {
+                    state = pirateState.CHASING;
+                }
+
+                break;
+
+            case pirateState.CHASING:
+
+                movement = (sightHandler.TargetPos - (Vector2)transform.position).normalized;
+
+                sightTransform.right = sightHandler.TargetPos - (Vector2)transform.position;
+
+                break;
+
+            case pirateState.CHATTING:
+
+
+                break;
+
+            case pirateState.DRUNK:
+
+
+                break;
+
+            case pirateState.CARRYING:
+
+
+                break;
+
         }
+
+        
 
         if (state == pirateState.WANDERING) {
 
-            TurnAwayFromWall();
+            
 
         }
 
@@ -74,17 +109,10 @@ public class PirateController : MonoBehaviour
         {
 
 
-            movement = (sightHandler.TargetPos - (Vector2)transform.position).normalized;
-
-            Debug.Log("Target vector: " + sightHandler.TargetPos);
-
-            Debug.Log("Pirate vector: " + transform.position);
-
-            Debug.Log("movment vector: " + movement);
-
-            sightTransform.right = sightHandler.TargetPos - (Vector2)transform.position;
 
         }
+
+
 
     }
 

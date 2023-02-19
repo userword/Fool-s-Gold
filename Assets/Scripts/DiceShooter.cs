@@ -12,8 +12,7 @@ public class DiceShooter : MonoBehaviour
 
     private BoxCollider2D floorBC;
 
-    private void Awake()
-    {
+    public void Play() {
 
         Dice.SetActive(true);
 
@@ -23,7 +22,7 @@ public class DiceShooter : MonoBehaviour
 
         diceRB.AddForce(new Vector2(550f, 0));
 
-    }
+    } 
 
     public int Shoot()
     {//rewrite idk... 
@@ -34,11 +33,6 @@ public class DiceShooter : MonoBehaviour
 
         return 1;
 
-    }
-
-    void Update()
-    {
-        
     }
 
 }

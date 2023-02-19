@@ -19,7 +19,7 @@ public class CupGame : MonoBehaviour, MiniGame
 
     private RectTransform barRect;
 
-    public GameObject redBar; //Outer
+    public GameObject redBar; // Outer
 
     private RectTransform redBarRect;
 
@@ -29,7 +29,7 @@ public class CupGame : MonoBehaviour, MiniGame
 
     private YellowBarCollisionHandler yellowBarCollisionHandler;
 
-    public GameObject greenBar; //Center
+    public GameObject greenBar; // Center
 
     private RectTransform greenBarRect;
 
@@ -39,52 +39,32 @@ public class CupGame : MonoBehaviour, MiniGame
 
     bool forwards = false, backwards = false, shuffling = false, started = false, chosen = false, show = false; // these booleans are supposed to track the different Mini game states
 
-    private float barspeed = 100f;
+    private float barspeed = 500f;
 
     private float cupSpeed = 10f;
 
+    private int rollResult;
+
     public GameObject cup1, cup2, cup3, pirateHand, playerHand;
+
+    public RectTransform cup1Rect, cup2Rect, cup3Rect, pirateHandRect, playerHandRect;
 
     private Vector2 cup1Target, cup2Target, cup3Target, pirateTarget, playerTarget;
 
-    public enum GameState { 
-    
-        
-    
-    }
-
     public void Initalize(int dieValue)
     {
-        
-    }
 
-    public void OnWin()
-    {
-        //GameManager.Singleton.OnWin();
-        //Destroy(gameObject);
-    }
+        // keep cups in place
 
-    public void OnLoss()
-    {
-        //GameManager.Singleton.OnLoss();
-        //Destroy(gameObject);
-    }
+        cup1Target = cup1Rect.localPosition;
 
-    void Awake()
-    {
-        Initalize(9);
+        cup2Target = cup2Rect.localPosition;
 
-        //keep cups in place
+        cup3Target = cup3Rect.localPosition;
 
-        cup1Target = cup1.transform.position;
+        playerTarget = playerHandRect.localPosition;
 
-        cup2Target = cup2.transform.position;
-
-        cup3Target = cup3.transform.position;
-
-        playerTarget = playerHand.transform.position;
-
-        pirateTarget = pirateHand.transform.position;
+        pirateTarget = pirateHandRect.localPosition;
 
         Debug.Log("Cup positions: \n" + cup1.transform.position + " " + cup2.transform.position + " " + cup3.transform.position);
 
@@ -106,13 +86,45 @@ public class CupGame : MonoBehaviour, MiniGame
 
         redBarRect = redBar.GetComponent<RectTransform>();
 
-        //set bounds for moving black bar
+        // set bounds for moving black bar
 
         leftBound = redBarRect.localPosition.x - redBarRect.rect.width / 2;
 
         rightBound = redBarRect.localPosition.x + redBarRect.rect.width / 2;
 
-        //Debug.Log("left: " + leftBound + "\n" + "right: " + rightBound + "\n");
+        float newCenter = UnityEngine.Random.Range(leftBound + (yellowBarRect.rect.width / 2), rightBound - (yellowBarRect.rect.width / 2));
+
+        yellowBarRect.localPosition = new Vector3(newCenter, yellowBarRect.localPosition.y, yellowBarRect.localPosition.z);
+
+        greenBarRect.localPosition = new Vector3(newCenter, yellowBarRect.localPosition.y, yellowBarRect.localPosition.z);
+
+        // Set size and position of smaller bars based on die roll, and speed of selection bar.
+
+        Debug.Log("Rolled a " + dieValue);
+
+        yellowBar.transform.localScale = new Vector3((dieValue * 0.075f), 1f, 1f);
+
+        greenBar.transform.localScale = new Vector3((dieValue * 0.05f), 1f, 1f);
+
+        barspeed -= dieValue * 30f;
+
+    }
+
+    public void OnWin()
+    {
+
+        // GameManager.Singleton.OnWin();
+
+        // Destroy(gameObject);
+
+    }
+
+    public void OnLoss()
+    {
+
+        // GameManager.Singleton.OnLoss();
+
+        // Destroy(gameObject);
 
     }
 
@@ -122,11 +134,11 @@ public class CupGame : MonoBehaviour, MiniGame
 
         started = true;
 
-        Lift(cup2, ref cup2Target, 70f);
+        Lift(cup2Rect, ref cup2Target, 70f);
 
         yield return new WaitForSeconds(2);
 
-        Fall(cup2, ref cup2Target, 70f);
+        Fall(cup2Rect, ref cup2Target, 70f);
 
         yield return new WaitForSeconds(0.75f);
 
@@ -219,21 +231,23 @@ public class CupGame : MonoBehaviour, MiniGame
 
         Debug.Log("Yoink");
 
-        playerTarget = cup2.transform.position;
+        playerTarget = cup2Rect.localPosition;
 
         cup2.GetComponent<Image>().sprite = cupTilted;
 
         dice.GetComponent<Canvas>().sortingOrder = 30;
 
-        yield return new WaitUntil(() => Vector2.Distance(playerHand.transform.position, playerTarget) < 0.1f);
+        yield return new WaitUntil(() => Vector2.Distance(playerHandRect.localPosition, playerTarget) < 0.1f);
 
         Debug.Log("Arrived");
 
-        Destroy(dice);
+        dice.transform.SetParent(playerHand.transform);
 
-        playerTarget = new Vector3(playerHand.transform.position.x, -100f, 0f);
+        //Destroy(dice);
 
-        yield return new WaitUntil(() => Vector2.Distance(playerHand.transform.position, playerTarget) < 0.1f);
+        playerTarget = new Vector3(playerHandRect.localPosition.x, -1000f, 0f);
+
+        yield return new WaitUntil(() => Vector2.Distance(playerHandRect.localPosition, playerTarget) < 0.1f);
 
         StartCoroutine(pickRight());
 
@@ -244,19 +258,19 @@ public class CupGame : MonoBehaviour, MiniGame
 
         Debug.Log("Wrong");
 
-        pirateTarget = cup1.transform.position + new Vector3(0f, 1f, 0f);
+        pirateTarget = cup2Rect.localPosition + new Vector3(0f, 10f, 0f);
 
-        yield return new WaitUntil(() => Vector2.Distance(pirateHand.transform.position, pirateTarget) < 0.1f);
+        yield return new WaitUntil(() => Vector2.Distance(pirateHandRect.localPosition, pirateTarget) < 0.1f);
 
         Debug.Log("Arrived");
 
         dice.transform.SetParent(this.transform);
 
-        cup1Target = cup1.transform.position + new Vector3(0f, 70f, 0f);
+        cup1Target = cup1Rect.localPosition + new Vector3(0f, 70f, 0f);
 
-        pirateTarget = pirateHand.transform.position + new Vector3(0f, 70f, 0f);
+        pirateTarget = pirateHandRect.localPosition + new Vector3(0f, 70f, 0f);
 
-        yield return new WaitUntil(() => Vector2.Distance(pirateHand.transform.position, pirateTarget) == 0f);
+        yield return new WaitUntil(() => Vector2.Distance(pirateHandRect.localPosition, pirateTarget) == 0f);
 
         yield return new WaitForSeconds(3);
 
@@ -270,11 +284,11 @@ public class CupGame : MonoBehaviour, MiniGame
 
         Debug.Log("Right");
 
-        pirateTarget = cup2.transform.position + new Vector3(0f, 20f, 0f);
+        pirateTarget = cup2Rect.localPosition + new Vector3(0f, 20f, 0f);
 
-        yield return new WaitUntil(() => Vector2.Distance(pirateHand.transform.position, pirateTarget) == 0f);
+        yield return new WaitUntil(() => Vector2.Distance(pirateHandRect.localPosition, pirateTarget) == 0f);
 
-        Debug.Log("Arrived. PiratePos: " + pirateHand.transform.position + " TargetPos: " + pirateTarget );
+        Debug.Log("Arrived. PiratePos: " + pirateHandRect.localPosition + " TargetPos: " + pirateTarget );
 
         try {
             dice.transform.SetParent(null);
@@ -282,13 +296,13 @@ public class CupGame : MonoBehaviour, MiniGame
         
         }
 
-        cup2Target = cup2.transform.position + new Vector3(0f, 70f, 0f);
+        cup2Target = cup2Rect.localPosition + new Vector3(0f, 70f, 0f);
 
-        pirateTarget = pirateHand.transform.position + new Vector3(0f, 70f, 0f);
+        pirateTarget = pirateHandRect.localPosition + new Vector3(0f, 70f, 0f);
 
-        yield return new WaitUntil(() => Vector2.Distance(pirateHand.transform.position, pirateTarget) == 0f);
+        yield return new WaitUntil(() => Vector2.Distance(pirateHandRect.localPosition, pirateTarget) == 0f);
 
-        Debug.Log("Arrived. PiratePos: " + pirateHand.transform.position + " TargetPos: " + pirateTarget);
+        Debug.Log("Arrived. PiratePos: " + pirateHandRect.localPosition + " TargetPos: " + pirateTarget);
 
         yield return new WaitForSeconds(3);
 
@@ -343,17 +357,17 @@ public class CupGame : MonoBehaviour, MiniGame
                 {
 
                     case 1:
-                        SwitchCups(cup1, cup2, ref cup1Target, ref cup2Target);
+                        SwitchCups(cup1Rect, cup2Rect, ref cup1Target, ref cup2Target);
 
                         break;
 
                     case 2:
-                        SwitchCups(cup3, cup2, ref cup3Target, ref cup2Target);
+                        SwitchCups(cup3Rect, cup2Rect, ref cup3Target, ref cup2Target);
 
                         break;
 
                     case 3:
-                        SwitchCups(cup1, cup3, ref cup1Target, ref cup3Target);
+                        SwitchCups(cup1Rect, cup3Rect, ref cup1Target, ref cup3Target);
 
                         break;
 
@@ -365,36 +379,35 @@ public class CupGame : MonoBehaviour, MiniGame
 
         //move the cups to thier target.
 
-        cup1.transform.position = Vector2.MoveTowards(cup1.transform.position, cup1Target, cupSpeed);
+        cup1Rect.localPosition = Vector2.MoveTowards(cup1Rect.localPosition, cup1Target, cupSpeed);
 
-        cup2.transform.position = Vector2.MoveTowards(cup2.transform.position, cup2Target, cupSpeed);
+        cup2Rect.localPosition = Vector2.MoveTowards(cup2Rect.localPosition, cup2Target, cupSpeed);
 
-        cup3.transform.position = Vector2.MoveTowards(cup3.transform.position, cup3Target, cupSpeed);
+        cup3Rect.localPosition = Vector2.MoveTowards(cup3Rect.localPosition, cup3Target, cupSpeed);
 
-        pirateHand.transform.position = Vector2.MoveTowards(pirateHand.transform.position, pirateTarget, cupSpeed);
+        pirateHandRect.localPosition = Vector2.MoveTowards(pirateHandRect.localPosition, pirateTarget, cupSpeed);
 
-        playerHand.transform.position = Vector2.MoveTowards(playerHand.transform.position, playerTarget, cupSpeed);
-
-    }
-
-    public void Lift(GameObject cup, ref Vector2 cupTarget, float height) {
-
-        cupTarget = new Vector2(cup.transform.position.x, cup.transform.position.y + height);
+        playerHandRect.localPosition = Vector2.MoveTowards(playerHandRect.localPosition, playerTarget, cupSpeed);
 
     }
 
-    public void Fall(GameObject cup, ref Vector2 cupTarget, float height)
+    public void Lift(RectTransform cup, ref Vector2 cupTarget, float height) {
+
+        cupTarget = new Vector2(cup.localPosition.x, cup.localPosition.y + height);
+
+    }
+
+    public void Fall(RectTransform cup, ref Vector2 cupTarget, float height)
     {
 
-        cupTarget = new Vector2(cup.transform.position.x, cup.transform.position.y - height);
+        cupTarget = new Vector2(cup.localPosition.x, cup.localPosition.y - height);
 
     }
 
-    public bool IsAtTarget(GameObject cup, ref Vector2 cupTarget, float threshold) {
+    public bool IsAtTarget(RectTransform cup, ref Vector2 cupTarget, float threshold) {
         //checks if the cup has reached its destination 
-        if (Vector2.Distance(cup.transform.position, cupTarget) < threshold) {
 
-
+        if (Vector2.Distance(cup.localPosition, cupTarget) < threshold) {
 
             return true;
 
@@ -404,11 +417,11 @@ public class CupGame : MonoBehaviour, MiniGame
 
     }
 
-    public void SwitchCups(GameObject cup1, GameObject cup2, ref Vector2 cup1target, ref Vector2 cup2target) {
+    public void SwitchCups(RectTransform cup1, RectTransform cup2, ref Vector2 cup1target, ref Vector2 cup2target) {
 
-        cup1target = cup2.transform.position;
+        cup1target = cup2.localPosition;
 
-        cup2target = cup1.transform.position;
+        cup2target = cup1.localPosition;
 
     }
 
@@ -433,9 +446,9 @@ public class CupGame : MonoBehaviour, MiniGame
 
     public bool cupsStopped(){
 
-        return IsAtTarget(cup1, ref cup1Target, 0.1f) &&
-         IsAtTarget(cup2, ref cup2Target, 0.1f) &&
-         IsAtTarget(cup3, ref cup3Target, 0.1f);
+        return IsAtTarget(cup1Rect, ref cup1Target, 0.1f) &&
+         IsAtTarget(cup2Rect, ref cup2Target, 0.1f) &&
+         IsAtTarget(cup3Rect, ref cup3Target, 0.1f);
 
         }
 

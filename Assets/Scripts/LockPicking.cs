@@ -102,11 +102,15 @@ public class LockPicking : MonoBehaviour, MiniGame
     public void Initalize(int dieValue)
     {
         float mutliplier = (dieValue - 3) / 6f;
+
         foreach (RingKeyPair ringKeyPair in ringKeyPairs)
         {
+
             float velocityDelta = ringKeyPair.angularVelocity * mutliplier;
             ringKeyPair.angularVelocity += velocityDelta;
+
         }
+
         Initalize();
     }
 
@@ -133,14 +137,14 @@ public class LockPicking : MonoBehaviour, MiniGame
     public void OnWin()
     {
         gameEnded = true;
-        GameManager.Singleton.OnWin();
+        //GameManager.Singleton.OnWin();
         Destroy(gameObject);
     }
 
     public void OnLoss()
     {
         gameEnded = true;
-        GameManager.Singleton.OnLoss();
+        //GameManager.Singleton.OnLoss();
         Destroy(gameObject);
     }
 }
