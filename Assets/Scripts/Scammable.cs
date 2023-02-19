@@ -31,6 +31,8 @@ public class Scammable : MonoBehaviour
         if (collision.gameObject.name == "PlayerParent")
         {
 
+            Debug.Log(collision.gameObject.GetComponent<PlayerMovement>());
+
             collision.gameObject.GetComponent<PlayerMovement>().RegisterScam(this);
 
             avalible = true;
@@ -69,17 +71,17 @@ public class Scammable : MonoBehaviour
         switch (typeOfScam) {
 
             case scamType.Pickpocketing:
-                controller.PlayPickpocketingGame();
+                //controller.PlayPickpocketingGame();
 
                 break;
 
             case scamType.Lockpicking:
-                controller.PlayLockpickingGame();
+                StartCoroutine(controller.PlayLockpickingGame());
 
                 break;
 
             case scamType.CupGame:
-                controller.PlayCupGame();
+                StartCoroutine(controller.PlayCupGame());
 
                 break;
         }

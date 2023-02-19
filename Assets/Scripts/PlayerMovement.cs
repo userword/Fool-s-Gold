@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
+    GameController GC;
+
     public Rigidbody2D rb;
 
     public float movespeed;
@@ -25,6 +27,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        avalibleScams = new List<Scammable>();
+
+        GC = GameObject.Find("Main Camera").GetComponent<GameController>();
 
     }
     private void Update()
@@ -32,11 +37,26 @@ public class PlayerMovement : MonoBehaviour
 
         HandleSelectionInputs();
 
+
+
         animator.SetFloat("Movespeed", rb.velocity.sqrMagnitude);
 
     }
     private void HandleSelectionInputs()
     {
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (avalibleScams.Count > 0 && !GameController.frozen) {
+
+                GameController.frozen = true;
+
+                ChooseClosestScam();
+                ExecuteScam();
+
+            }
+
+        }
 
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
@@ -60,10 +80,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void ChooseClosestScam() {
 
+        chosenScam = avalibleScams[0];
+
         foreach (Scammable scam in avalibleScams)
         {
 
-            if (scam.distanceToPlayer <= chosenScam.distanceToPlayer)
+            if (scam.distanceToPlayer <= chosenScam.distanceToPlayer && chosenScam)
             {
 
                 chosenScam = scam;

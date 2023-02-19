@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
 
-    public bool frozen = false;
+    public static bool frozen = false;
 
     public int currentRoll;
 
@@ -13,36 +13,18 @@ public class GameController : MonoBehaviour
 
     public GameObject dicePrefabRef;
 
+    public GameObject miniGame; //used to store the current minigame
+
     public GameObject cupGamePrefab;
 
-    public GameObject cupGame;
-
     public GameObject sweetTalkingMinigamePrefab;
+
+    public GameObject lockpickingMinigamePrefab;
 
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Q)) {
 
-            dicePrefabRef = Instantiate(dicePrefab);
-
-            dicePrefabRef.transform.parent = this.transform;
-
-        }
-
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-
-            StartCoroutine(PlayCupGame());
-
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-
-            Instantiate(sweetTalkingMinigamePrefab);
-
-        }
 
     }
 
@@ -62,14 +44,28 @@ public class GameController : MonoBehaviour
 
         yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final != 7);
 
-        cupGame = Instantiate(cupGamePrefab);
+        miniGame = Instantiate(cupGamePrefab);
 
         currentRoll = dicePrefabRef.GetComponentInChildren<DiceRoller>().final;
 
-        cupGame.GetComponent<CupGame>().Initalize(currentRoll);
+        miniGame.GetComponent<CupGame>().Initalize(currentRoll);
 
     }
-    public void PlayLockpickingGame() { }
+    public IEnumerator PlayLockpickingGame()
+    {
+
+        RollDice();
+
+        yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final != 7);
+
+        miniGame = Instantiate(lockpickingMinigamePrefab);
+
+        currentRoll = dicePrefabRef.GetComponentInChildren<DiceRoller>().final;
+
+        miniGame.GetComponentInChildren<LockPicking>().Initalize(currentRoll);
+
+    }
+
     public void PlaySweetTalkinGame() { }
     public void PlayPickpocketingGame() { }
 

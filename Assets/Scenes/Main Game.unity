@@ -368,10 +368,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frozen: 0
+  currentRoll: 0
   dicePrefab: {fileID: 8324974850109523019, guid: 1122a92121a9ee440be04f6c241f97fe, type: 3}
   dicePrefabRef: {fileID: 0}
+  miniGame: {fileID: 0}
   cupGamePrefab: {fileID: 5058583433161535196, guid: 3202d57ae57fe374b8bc89524a001283, type: 3}
   sweetTalkingMinigamePrefab: {fileID: 787602848166083828, guid: 045f6f7a1a10f4422b997c979cb10719, type: 3}
+  lockpickingMinigamePrefab: {fileID: 5886607940926856271, guid: efd2593855380864da558b144827138b, type: 3}
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0

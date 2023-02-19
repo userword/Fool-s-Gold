@@ -18,7 +18,7 @@ public class DiceRoller : MonoBehaviour
 
     Rigidbody2D rb;
 
-    Vector3 EndPos = new Vector3 (0f, 4f, 0f);
+    Vector3 EndPos = new Vector3 (0f, 3f, 0f);
     Quaternion EndRotaion = new Quaternion(0f, 0f, 0f, 0f);
 
     void Awake() {
