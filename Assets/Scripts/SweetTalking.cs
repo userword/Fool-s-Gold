@@ -7,7 +7,6 @@ public class SweetTalking : MonoBehaviour, MiniGame{
     public GameObject game;
     public AudioSource musicPlay;
     public bool Play;
-    public Scroller scroll;
     public float score = 0;
     public float NeedScore = 0;
     public int miss = 0;
@@ -37,42 +36,44 @@ public class SweetTalking : MonoBehaviour, MiniGame{
         // scoreText.text = "Score: " + score;
         // NeedText.text = "Needed To Wind: " + NeedScore;
         // missesAllowed.text = "Misses Allowed: " + miss;
-        NT.BPM = (dieValue * 30f);
+        NT.BPM = (dieValue);
         instance = this;
         for (int i = 0; i <10; i++){
             HiHat[i] = (Random.Range(0,2) != 0);
             Drum[i] = (Random.Range(0,2) != 0);
             Bass[i] = (Random.Range(0,2) != 0);
         }
+         float ypos = notesA.transform.position.y;
          for (int i = 0; i <10; i++){
             Debug.Log(HiHat[i]);
             if (HiHat[i]){
                 NeedScore++;
-                float ypos = Random.Range(-2.6f,35f);
-                Vector3 AButton =  new Vector3(-1.77f, ypos +13.3614767f, 8.329795f);
+                // float ypos = Random.Range(-2.6f,35f);
+                Vector3 AButton =  new Vector3(notesA.transform.position.x, ypos, notesA.transform.position.z);
                 NoteObject newNoteA = Instantiate(notesA, AButton, Quaternion.identity);
                 newNoteA.transform.parent = NT.transform;
             }
             Debug.Log(Drum[i]);
             if (Drum[i]){
                 NeedScore++;
-                float ypos = Random.Range(-2.6f,30f);
-                Vector3 AButton =  new Vector3(0.1f, ypos +10.3614767f, 8.329795f);
+                // float ypos = Random.Range(-2.6f,30f);
+                Vector3 AButton =  new Vector3(notesS.transform.position.x, ypos, notesS.transform.position.z);
                 NoteObject  newNoteS = Instantiate(notesS, AButton, Quaternion.identity);
                 newNoteS.transform.parent = NT.transform;
             }
             Debug.Log(Bass[i]);
             if (Bass[i]){
                 NeedScore++;
-                float ypos = Random.Range(-2.6f,30f);
-                Vector3 AButton =  new Vector3(2.4f, ypos +7.3614767f, 8.329795f);
+                // float ypos = Random.Range(-2.6f,30f);
+                Vector3 AButton =  new Vector3(notesSpace.transform.position.x, ypos, notesSpace.transform.position.z);
                 NoteObject  newNoteSpace = Instantiate(notesSpace, AButton, Quaternion.identity);
                 newNoteSpace.transform.parent = NT.transform;
             }
+            ypos+=2.5f;
         }
         NeedScore *= (dieValue/4f);
         NeedScore = 60 * NeedScore;
-        Debug.Log(NeedScore);
+        Debug.Log("NeedScore: " + NeedScore);
     }
 
     // Update is called once per frame
@@ -84,15 +85,17 @@ public class SweetTalking : MonoBehaviour, MiniGame{
         if (!Play){
             if (Input.anyKeyDown){
                 Play = true;
-                scroll.isStart = true;
+                NT.isStart = true;
                 musicPlay.Play();
             }
         }
         if (miss == 5){
+            NT.BPM = 0;
             OnLoss();
             return;
         }
-        if (score > NeedScore){
+        if (score >= NeedScore){
+            NT.BPM = 0;
             OnWin();
             return;
         }
@@ -120,14 +123,14 @@ public class SweetTalking : MonoBehaviour, MiniGame{
     {
         gameEnded = true;
         GameManager.Singleton.OnWin();
-        Destroy(game);
+        // Destroy(game);
     }
 
     public void OnLoss()
     {
         gameEnded = true;
         GameManager.Singleton.OnLoss();
-        Destroy(game);
+        // Destroy(game);
     }
 
 }
