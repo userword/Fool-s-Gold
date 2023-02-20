@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _singleton;
+
+   //public GameController gc;
     public static GameManager Singleton
     {
         get => _singleton;
@@ -24,16 +26,26 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject lockPickingPrefab;
 
     private void Awake() {
+
         Singleton = this;
+
+        //gc = GameObject.Find("Main Camera").GetComponent<GameController>();
+
     }
 
     public void OnWin()
     {
+
+        GameController.frozen = false;
+
         Debug.Log("player won a game!");
     }
 
     public void OnLoss()
     {
+
+        GameController.frozen = false;
+
         Debug.Log("player lost a game!");
     }
     

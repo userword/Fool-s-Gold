@@ -59,8 +59,6 @@ public class PickpocketScript : MonoBehaviour
     [SerializeField] private Image timeBarFillArea;
     [SerializeField] private float totalTime = 10f;
 
-
-
     // Initialize the positions of the pirate from the player.
     //TURN TO "Initialize" ONCE COMPLETED
     void Awake()
