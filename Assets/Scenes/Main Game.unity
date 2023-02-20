@@ -10460,6 +10460,10 @@ PrefabInstance:
       propertyPath: waitrange
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: -8217209211827543094, guid: 9876ebfd11cf7644c8688b50eacaa218, type: 3}
+      propertyPath: defaultDirection
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4729444064313424856, guid: 9876ebfd11cf7644c8688b50eacaa218, type: 3}
       propertyPath: m_RootOrder
       value: 7
