@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject creditsMenu;
+    [SerializeField] private GameObject loadingMenu;
 
     private GameObject _activeMenu;
     private GameObject activeMenu 
@@ -36,6 +37,7 @@ public class UIManager : MonoBehaviour
         {
             mainMenu.SetActive(false);
             creditsMenu.SetActive(false);
+            loadingMenu.SetActive(false);
             // maybe add some sort of an effect here
             value.SetActive(true);
             _activeMenu = value;
@@ -44,7 +46,8 @@ public class UIManager : MonoBehaviour
 
     public void OnPlayButton()
     {
-        SceneManager.LoadScene("Main Game");
+        activeMenu = loadingMenu;
+        StartCoroutine("SceneLoad");
     }
 
     public void OnCreditsButton()
@@ -60,5 +63,13 @@ public class UIManager : MonoBehaviour
     public void OnQuitButton()
     {
         Application.Quit();
+    }
+
+    private IEnumerator SceneLoad()
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync("Main Game");
+        operation.allowSceneActivation = false;
+        yield return new WaitForSeconds(1f);
+        operation.allowSceneActivation = true;
     }
 }

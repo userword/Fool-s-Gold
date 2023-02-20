@@ -61,7 +61,7 @@ public class CreditsScroll : MonoBehaviour
         creditTransform.gameObject.SetActive(true);
         movingCredits.Add(new CreditData(creditTransform));
         transformPointer = (transformPointer + 1) % creditTransforms.Length;
-        Debug.Log(transformPointer);
+        //Debug.Log(transformPointer);
     }
 
     void Update()
