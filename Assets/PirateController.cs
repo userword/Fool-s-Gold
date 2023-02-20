@@ -14,7 +14,7 @@ public class PirateController : MonoBehaviour
     }
     public enum direction {
 
-        UP, DOWN, LEFT, RIGHT
+        UP, DOWN, LEFT, RIGHT, STILL
 
     }
 
@@ -39,6 +39,8 @@ public class PirateController : MonoBehaviour
     public BuildingColliderHandler lowerCollision;
 
     public PirateSightHandler sightHandler;
+
+    public ChatboxHandler chatHandler;
 
     public Transform sightTransform;
 
@@ -65,7 +67,14 @@ public class PirateController : MonoBehaviour
         {
 
             case pirateState.WANDERING:
+
                 TurnAwayFromWall();
+
+                if (chatHandler.chatting) {
+
+                    state = pirateState.CHATTING;
+
+                }
 
                 break;
 
@@ -82,6 +91,8 @@ public class PirateController : MonoBehaviour
 
             case pirateState.CHASING:
 
+                speed = 1.5f;
+
                 movement = (sightHandler.TargetPos - (Vector2)transform.position).normalized;
 
                 sightTransform.right = sightHandler.TargetPos - (Vector2)transform.position;
@@ -90,11 +101,15 @@ public class PirateController : MonoBehaviour
 
             case pirateState.CHATTING:
 
+                SetDirecton(direction.STILL);
 
                 break;
 
             case pirateState.DRUNK:
 
+                speed = 0.5f;
+
+                TurnAwayFromWall();
 
                 break;
 
@@ -148,6 +163,14 @@ public class PirateController : MonoBehaviour
                 sightTransform.eulerAngles = new Vector3(0f, 0f, 0f);
 
                 movement = new Vector3(1, 0, 0);
+
+                break;
+
+            case direction.STILL:
+
+                sightTransform.eulerAngles = new Vector3(0f, 0f, 0f);
+
+                movement = new Vector3(0, 0, 0);
 
                 break;
 
