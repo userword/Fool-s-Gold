@@ -24,7 +24,7 @@ public class SweetTalking : MonoBehaviour, MiniGame{
     public NoteObject  notesS;
     public NoteObject notesSpace;
     public Scroller NT;
-
+    public TMP_Text result;
     
     
     private bool gameEnded = false;
@@ -41,6 +41,7 @@ public class SweetTalking : MonoBehaviour, MiniGame{
         // NeedText.text = "Needed To Wind: " + NeedScore;
         // missesAllowed.text = "Misses Allowed: " + miss;
         instance = this;
+        result.text = "";
         for (int i = 0; i <10; i++){
             HiHat[i] = (Random.Range(0,2) != 0);
             Drum[i] = (Random.Range(0,2) != 0);
@@ -119,6 +120,7 @@ public class SweetTalking : MonoBehaviour, MiniGame{
     public void NoteHit() {
         Debug.Log("YASSSS");
         score += 100;
+        result.text = score.ToString();
         if (LHead.transform.position.x < pirate.transform.position.x){
             WinBar.transform.localScale = new Vector2(WinBar.transform.localScale.x +0.5f,WinBar.transform.localScale.y);
             LoseBar.transform.localScale = new Vector2(LoseBar.transform.localScale.x +0.5f,LoseBar.transform.localScale.y);
@@ -132,7 +134,8 @@ public class SweetTalking : MonoBehaviour, MiniGame{
     public void NoteMiss(){
         Debug.Log("BOOO");
         miss++;
-        
+        score -= 100;
+        result.text = score.ToString();
         if (WHead.transform.position.x > Afool.transform.position.x){
             WinBar.transform.localScale = new Vector2(WinBar.transform.localScale.x-0.5f,WinBar.transform.localScale.y);
             LoseBar.transform.localScale = new Vector2(LoseBar.transform.localScale.x -0.5f,LoseBar.transform.localScale.y);
@@ -152,6 +155,7 @@ public class SweetTalking : MonoBehaviour, MiniGame{
     {
         gameEnded = true;
         // GameManager.Singleton.OnWin();
+        result.text = "You Win!";
         Invoke("Kill", 1.5f);
     }
 
@@ -159,6 +163,7 @@ public class SweetTalking : MonoBehaviour, MiniGame{
     {
         gameEnded = true;
         // GameManager.Singleton.OnLoss();
+        result.text = "You Lose!";
         Invoke("Kill", 1.5f);
     }
 
