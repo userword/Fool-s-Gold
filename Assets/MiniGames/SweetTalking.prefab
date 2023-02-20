@@ -8883,8 +8883,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bf9b10d7c8654b6ca94daa3188abb4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fool: {fileID: 2526941085017227159}
   defaultButton: {fileID: 21300000, guid: be6a835f2bc9e1e4bb3e721f213f15a9, type: 3}
   pressedButton: {fileID: 21300000, guid: a8772dde18189724ca2b59e220f75f79, type: 3}
+  danceMove: {fileID: 21300000, guid: dd2d03ff58a9ed84d85727aabd5f329c, type: 3}
+  defaultMove: {fileID: 21300000, guid: d494e0704793ce84aab02a5677e4e9dc, type: 3}
   buttonPress: 115
   sound: {fileID: 4157698185913668343}
 --- !u!50 &301051466143484490
@@ -9305,8 +9308,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bf9b10d7c8654b6ca94daa3188abb4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fool: {fileID: 2526941085017227159}
   defaultButton: {fileID: 21300000, guid: 8c5a979a8babb3345935923251008a9c, type: 3}
   pressedButton: {fileID: 21300000, guid: 10f6323cea7821e40bc793a5a84c1d7e, type: 3}
+  danceMove: {fileID: 21300000, guid: dd2d03ff58a9ed84d85727aabd5f329c, type: 3}
+  defaultMove: {fileID: 21300000, guid: d494e0704793ce84aab02a5677e4e9dc, type: 3}
   buttonPress: 100
   sound: {fileID: 3265703706577761584}
 --- !u!50 &73111549492671205
@@ -9358,7 +9364,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5304563411678296476}
   m_LocalRotation: {x: 0.002617889, y: -0.008720911, z: 0.00002283132, w: 0.99995863}
-  m_LocalPosition: {x: -1.26, y: -2, z: 8.44}
+  m_LocalPosition: {x: -1.26, y: -1.54, z: 8.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9983,8 +9989,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bf9b10d7c8654b6ca94daa3188abb4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fool: {fileID: 2526941085017227159}
   defaultButton: {fileID: 21300000, guid: 3cb760743746b1a4db297fcf5f2188c0, type: 3}
   pressedButton: {fileID: 21300000, guid: 0a14f189900f1784bb9bc63a40e68301, type: 3}
+  danceMove: {fileID: 21300000, guid: dd2d03ff58a9ed84d85727aabd5f329c, type: 3}
+  defaultMove: {fileID: 21300000, guid: d494e0704793ce84aab02a5677e4e9dc, type: 3}
   buttonPress: 97
   sound: {fileID: 7028183720969396422}
 --- !u!50 &4031812329170390353
