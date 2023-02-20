@@ -100,7 +100,7 @@ public class GameController : MonoBehaviour
 
         currentRoll = dicePrefabRef.GetComponentInChildren<DiceRoller>().final;
 
-        //miniGame.GetComponentInChildren<PickpocketScript>().Initalize(currentRoll);
+        miniGame.GetComponentInChildren<PickpocketScript>().Initialize(currentRoll);
 
     }
 
