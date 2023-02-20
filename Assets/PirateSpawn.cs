@@ -10,11 +10,14 @@ public class PirateSpawn : MonoBehaviour
 
     int waittime, waitrange;
 
-    IEnumerator SpawnPirate() {
+    public IEnumerator SpawnPirate() {
 
-        Instantiate(piratePrefab);
-    
-        
+        GameObject pirate = Instantiate(piratePrefab);
+
+        PirateController pc = pirate.GetComponent<PirateController>();
+
+
+       yield return new WaitForSeconds(1);
     
     }
 

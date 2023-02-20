@@ -165,6 +165,7 @@ public class PirateController : MonoBehaviour
 
     }
 
+    public void SetMode
     public void TurnAwayFromWall() {
 
         if (rightCollision.contact == true && movementDirection == direction.RIGHT)
