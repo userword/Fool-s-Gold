@@ -21,9 +21,7 @@ public class SweetTalking : MonoBehaviour, MiniGame{
     public NoteObject  notesS;
     public NoteObject notesSpace;
     public Scroller NT;
-    // public TextMeshProUGUI scoreText;
-    // public TextMeshProUGUI NeedText;
-    // public TMP_Text missesAllowed;
+
     
     
     private bool gameEnded = false;
@@ -33,6 +31,7 @@ public class SweetTalking : MonoBehaviour, MiniGame{
     private void Start(){
         Initalize(3);
     }
+
     public void Initalize(int dieValue)
     {
         // scoreText.text = "Score: " + score;
