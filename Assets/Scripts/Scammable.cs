@@ -76,6 +76,8 @@ public class Scammable : MonoBehaviour
     }
     public void Go() {
 
+        Debug.Log(typeOfScam + "\n");
+
         switch (typeOfScam) {
 
             case scamType.Pickpocketing:

@@ -58,6 +58,7 @@ public class ChatboxHandler : MonoBehaviour
 
         LXmarks.SetActive(true);
 
+
         StartCoroutine(Reset());
 
     }

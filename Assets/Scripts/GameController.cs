@@ -92,9 +92,11 @@ public class GameController : MonoBehaviour
 
         RollDice();
 
-        yield return new WaitForSeconds(5);
+        Debug.Log("Waiting");
 
-        Debug.Log("Hello");
+        yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final != 7);
+
+        Debug.Log("Done");
 
         miniGame = Instantiate(pickpocketingMinigamePrefab);
 

@@ -107,12 +107,26 @@ public class PirateController : MonoBehaviour
 
             case pirateState.CHATTING:
 
-                SetDirecton(direction.STILL);
+                state = pirateState.STILL;
 
                 if (!chatHandler.chatting)
                 {
 
                     state = pirateState.WANDERING;
+
+                    SetDirecton(direction.LEFT);
+
+                }
+
+                if (chatHandler.RXmarks.activeSelf == true)
+                {
+
+                    sightTransform.eulerAngles = new Vector3(0f, 0f, 0f);
+
+                }
+                else {
+
+                    sightTransform.eulerAngles = new Vector3(0f, 0f, 180f);
 
                 }
 
@@ -135,13 +149,19 @@ public class PirateController : MonoBehaviour
 
                 SetDirecton(direction.STILL);
 
-                if (newChest.activeSelf == false)
+                if (newChest != null)
                 {
 
-                    SetMode(pirateState.WANDERING);
+                    if (newChest.activeSelf == false)
+                    {
 
+                        SetMode(pirateState.WANDERING);
+
+                        sightTransform.eulerAngles = new Vector3(0f, 0f, 180f);
+
+
+                    }
                 }
-
 
                 break;
 
@@ -194,8 +214,6 @@ public class PirateController : MonoBehaviour
                 break;
 
             case direction.STILL:
-
-                sightTransform.eulerAngles = new Vector3(0f, 0f, 0f);
 
                 movement = new Vector3(0, 0, 0);
 
