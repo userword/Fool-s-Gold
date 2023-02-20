@@ -66,7 +66,21 @@ public class GameController : MonoBehaviour
 
     }
 
-    public void PlaySweetTalkinGame() { }
+    public IEnumerator PlaySweetTalkingGame() 
+    {
+
+        RollDice();
+
+        yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final != 7);
+
+        miniGame = Instantiate(sweetTalkingMinigamePrefab);
+
+        currentRoll = dicePrefabRef.GetComponentInChildren<DiceRoller>().final;
+
+        miniGame.GetComponentInChildren<SweetTalking>().Initalize(currentRoll);
+
+    }
+
     public void PlayPickpocketingGame() { }
 
 

@@ -15,7 +15,7 @@ public class Scammable : MonoBehaviour
 
     public enum scamType { 
     
-        Pickpocketing, Lockpicking, CupGame 
+        Pickpocketing, Lockpicking, CupGame, SweetTalking 
 
     }
 
@@ -82,6 +82,11 @@ public class Scammable : MonoBehaviour
 
             case scamType.CupGame:
                 StartCoroutine(controller.PlayCupGame());
+
+                break;
+            
+            case scamType.SweetTalking:
+                StartCoroutine(controller.PlaySweetTalkingGame());
 
                 break;
         }

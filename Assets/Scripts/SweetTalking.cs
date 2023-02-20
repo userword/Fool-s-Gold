@@ -129,15 +129,15 @@ public class SweetTalking : MonoBehaviour, MiniGame{
     public void OnWin()
     {
         gameEnded = true;
-        GameManager.Singleton.OnWin();
-        // Destroy(game);
+        // GameManager.Singleton.OnWin();
+        Destroy(game);
     }
 
     public void OnLoss()
     {
         gameEnded = true;
-        GameManager.Singleton.OnLoss();
-        // Destroy(game);
+        // GameManager.Singleton.OnLoss();
+        Destroy(game);
     }
 
 }
