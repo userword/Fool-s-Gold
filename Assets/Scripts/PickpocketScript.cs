@@ -159,7 +159,7 @@ public class PickpocketScript : MonoBehaviour
         } 
         else if (pirateState == 3) //looking back (after transition; nothin done when pirateState == 2)
         {
-            print("HERE");
+            //print("HERE");
             //print(pirateTimer);
             //if (pirateTimer <= 0)
             //{

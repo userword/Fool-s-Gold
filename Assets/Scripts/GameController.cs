@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour
 
     public GameObject cupGamePrefab;
 
+    public GameObject pickpocketingMinigamePrefab;
+
     public GameObject sweetTalkingMinigamePrefab;
 
     public GameObject lockpickingMinigamePrefab;
@@ -28,6 +30,8 @@ public class GameController : MonoBehaviour
         dicePrefabRef = Instantiate(dicePrefab);
 
         dicePrefabRef.transform.parent = this.transform;
+
+        dicePrefabRef.transform.position = this.transform.position + new Vector3(0f, 0f, 10f);
 
         dicePrefabRef.GetComponent<DiceShooter>().Play();
 
@@ -82,12 +86,13 @@ public class GameController : MonoBehaviour
 
         yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final != 7);
 
-        miniGame = Instantiate(sweetTalkingMinigamePrefab);
+        Debug.Log("Hello");
+
+        miniGame = Instantiate(pickpocketingMinigamePrefab);
 
         currentRoll = dicePrefabRef.GetComponentInChildren<DiceRoller>().final;
 
-        miniGame.GetComponentInChildren<SweetTalking>().Initalize(currentRoll);
-
+        //miniGame.GetComponentInChildren<PickpocketScript>().Initalize(currentRoll);
 
     }
 

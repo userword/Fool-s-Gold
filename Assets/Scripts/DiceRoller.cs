@@ -18,7 +18,7 @@ public class DiceRoller : MonoBehaviour
 
     Rigidbody2D rb;
 
-    Vector3 EndPos = new Vector3 (0f, 3f, 0f);
+    Vector3 EndPos;
     Quaternion EndRotaion = new Quaternion(0f, 0f, 0f, 0f);
 
     void Awake() {
@@ -29,13 +29,15 @@ public class DiceRoller : MonoBehaviour
 
         rb = this.GetComponent<Rigidbody2D>();
 
+        EndPos = new Vector3(0, 4f, 0);
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (collision.gameObject.name == "Floor")
-            {
+       // if (collision.gameObject.name == "Floor")
+            
 
             if (numBounces < 6)
             {
@@ -50,7 +52,7 @@ public class DiceRoller : MonoBehaviour
                 rb.simulated = false;
             
             }
-        }
+        
 
     }
 
@@ -115,13 +117,13 @@ public class DiceRoller : MonoBehaviour
 
         if (!rb.simulated) {
 
-            transform.position = Vector2.MoveTowards(transform.position, EndPos, 0.01f);
+            transform.localPosition = Vector2.MoveTowards(transform.localPosition, EndPos, 0.01f);
 
             transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
 
         }
 
-        if (Vector2.Distance(transform.position, EndPos) < 0.1f) {
+        if (Vector2.Distance(transform.localPosition, EndPos) < 0.1f) {
 
             final = current;
 
