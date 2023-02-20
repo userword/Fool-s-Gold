@@ -22,6 +22,11 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject diceRollPrefab;
     [SerializeField] private GameObject lockPickingPrefab;
+
+    private void Awake() {
+        Singleton = this;
+    }
+
     public void OnWin()
     {
         Debug.Log("player won a game!");
