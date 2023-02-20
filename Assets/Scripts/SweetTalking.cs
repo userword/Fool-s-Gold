@@ -13,6 +13,8 @@ public class SweetTalking : MonoBehaviour, MiniGame{
     public GameObject WinBar;
     public GameObject WHead;
     public GameObject LHead;
+    public GameObject Afool;
+    public GameObject pirate;
     public GameObject LoseBar;
     private bool[] HiHat = new bool [10];
     private bool[] Drum = new bool [10];
@@ -93,12 +95,12 @@ public class SweetTalking : MonoBehaviour, MiniGame{
             }
         }
         if (miss == 10){
-            NT.BPM = 0;
+            // NT.BPM = 0;
             OnLoss();
             return;
         }
         if (score >= NeedScore){
-            NT.BPM = 0;
+            // NT.BPM = 0;
             OnWin();
             return;
         }
@@ -108,21 +110,25 @@ public class SweetTalking : MonoBehaviour, MiniGame{
     public void NoteHit() {
         Debug.Log("YASSSS");
         score += 50;
-        WinBar.transform.localScale = new Vector2(WinBar.transform.localScale.x +0.5f,WinBar.transform.localScale.y);
-        LoseBar.transform.localScale = new Vector2(LoseBar.transform.localScale.x +0.5f,LoseBar.transform.localScale.y);
-        WHead.transform.position = new Vector2(WHead.transform.position.x +0.5f, WHead.transform.position.y);
-        LHead.transform.position = new Vector2(LHead.transform.position.x +0.5f, WHead.transform.position.y);
-        // WinBar.transform.position = new Vector2(0.5f, WinBar.transform.position.y);
+        if (LHead.transform.position.x < pirate.transform.position.x){
+            WinBar.transform.localScale = new Vector2(WinBar.transform.localScale.x +0.5f,WinBar.transform.localScale.y);
+            LoseBar.transform.localScale = new Vector2(LoseBar.transform.localScale.x +0.5f,LoseBar.transform.localScale.y);
+            WHead.transform.position = new Vector2(WHead.transform.position.x +0.5f, WHead.transform.position.y);
+            LHead.transform.position = new Vector2(LHead.transform.position.x +0.5f, WHead.transform.position.y);
+        }
         Debug.Log(score);
     }
 
     public void NoteMiss(){
         Debug.Log("BOOO");
         miss++;
-        WinBar.transform.localScale = new Vector2(WinBar.transform.localScale.x-0.5f,WinBar.transform.localScale.y);
-        LoseBar.transform.localScale = new Vector2(LoseBar.transform.localScale.x -0.5f,LoseBar.transform.localScale.y);
-        WHead.transform.position = new Vector2(WHead.transform.position.x -0.5f, WHead.transform.position.y);
-        LHead.transform.position = new Vector2(LHead.transform.position.x -0.5f, WHead.transform.position.y);
+        
+        if (WHead.transform.position.x > Afool.transform.position.x){
+            WinBar.transform.localScale = new Vector2(WinBar.transform.localScale.x-0.5f,WinBar.transform.localScale.y);
+            LoseBar.transform.localScale = new Vector2(LoseBar.transform.localScale.x -0.5f,LoseBar.transform.localScale.y);
+            WHead.transform.position = new Vector2(WHead.transform.position.x -0.5f, WHead.transform.position.y);
+            LHead.transform.position = new Vector2(LHead.transform.position.x -0.5f, WHead.transform.position.y);
+        }
         Debug.Log(miss);
     }
 
@@ -130,14 +136,14 @@ public class SweetTalking : MonoBehaviour, MiniGame{
     {
         gameEnded = true;
         // GameManager.Singleton.OnWin();
-        Destroy(game);
+        // Destroy(game);
     }
 
     public void OnLoss()
     {
         gameEnded = true;
         // GameManager.Singleton.OnLoss();
-        Destroy(game);
+        // Destroy(game);
     }
 
 }

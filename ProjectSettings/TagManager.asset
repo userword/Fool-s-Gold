@@ -13,7 +13,7 @@ TagManager:
   - Water
   - UI
   - Dice Roll Animation
-  - 
+  - Background
   - 
   - 
   - 
@@ -47,4 +47,10 @@ TagManager:
     locked: 0
   - name: Dice
     uniqueID: 3418605903
+    locked: 0
+  - name: UI
+    uniqueID: 327403021
+    locked: 0
+  - name: Background
+    uniqueID: 4204417855
     locked: 0
