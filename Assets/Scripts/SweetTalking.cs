@@ -151,14 +151,14 @@ public class SweetTalking : MonoBehaviour, MiniGame{
     public void OnWin()
     {
         gameEnded = true;
-        GameManager.Singleton.OnWin();
+        // GameManager.Singleton.OnWin();
         Invoke("Kill", 1.5f);
     }
 
     public void OnLoss()
     {
         gameEnded = true;
-        GameManager.Singleton.OnLoss();
+        // GameManager.Singleton.OnLoss();
         Invoke("Kill", 1.5f);
     }
 
