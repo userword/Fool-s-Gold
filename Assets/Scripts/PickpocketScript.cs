@@ -242,7 +242,7 @@ public class PickpocketScript : MonoBehaviour
         Destroy(gc.dicePrefabRef);
         Destroy(gameObject.transform.root.gameObject, 4);
 
-        GameObject.Find("PlayerParent").GetComponent<PlayerMovement>().chosenScam.myPirate.Anger();
+        //GameObject.Find("PlayerParent").GetComponent<PlayerMovement>().chosenScam.myPirate.Anger();
 
     }
 
