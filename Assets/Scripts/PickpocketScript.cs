@@ -29,6 +29,8 @@ public class PickpocketScript : MonoBehaviour
     public float lookBackDurationMax;//Amount of time pirate looks back maximum.
     public float minigameTimeout; //Amount of time elapsedbefore automatic fail.
 
+    public GameController gc;
+
     //RUNTIME VARIABLES
     private float metronome; //Calculation for state changes is done every second (to avoid state changes happening too frequently).
     private float elapsed = 0f; //time elapsed since start of minigame. Used for all timings.
@@ -66,6 +68,8 @@ public class PickpocketScript : MonoBehaviour
     void Awake()
     {
 
+        gc = GameObject.Find("Main Camera").GetComponent<GameController>();
+
         //Get gameobject variables.
         playerSprite = playerObject.GetComponent<SpriteRenderer>();
         pirateSprite = pirateObject.GetComponent<SpriteRenderer>();
@@ -85,7 +89,7 @@ public class PickpocketScript : MonoBehaviour
 
         if (elapsed > minigameTimeout) //went past the time limit.
         {
-            //Failure state.
+            //FailState();
         }
 
         if (Input.GetKey(KeyCode.RightArrow))
@@ -104,6 +108,15 @@ public class PickpocketScript : MonoBehaviour
             //Set animation to idling
             playerWalk = false;
             playerAnimator.SetInteger("PlayerAnimState", 0); //Set animation to idling.
+        }
+
+        if (Vector2.Distance(playerObject.transform.localPosition, pirateObject.transform.localPosition) < 0.1f) {
+
+            GameManager.Singleton.OnWin();
+
+            Destroy(gc.dicePrefabRef);
+            Destroy(gameObject.transform.root.gameObject);
+
         }
 
 
@@ -193,6 +206,8 @@ public class PickpocketScript : MonoBehaviour
         }
         else if (pirateState == 4) //Spotted! (failed)
         {
+            FailState();
+
             print("SPOTTED");
             //Do something here?
         }
@@ -203,10 +218,22 @@ public class PickpocketScript : MonoBehaviour
         //print("END");
     }
 
+    private void FailState() {
+
+        Destroy(gc.dicePrefabRef);
+        Destroy(gameObject.transform.root.gameObject, 4);
+
+        GameObject.Find("PlayerParent").GetComponent<PlayerMovement>().chosenScam.myPirate.Anger();
+
+    }
+
+
     //Function to be called by animation event (once the transition completes to look back.
     public void ChangePirateState(int value)
     {
+
         pirateState = value;
+
     }
 
 }

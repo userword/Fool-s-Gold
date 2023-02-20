@@ -9,7 +9,6 @@ public class PirateSightHandler : MonoBehaviour
 
     public Transform targetTransform;
 
-
     public bool found;
     void Start()
     {

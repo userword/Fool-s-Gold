@@ -5,11 +5,13 @@ using UnityEngine;
 public class PirateController : MonoBehaviour
 {
 
+    GameController GC;
+
     public GameObject chestPrefab;
     public GameObject myChest;
     public enum pirateState {
 
-        WANDERING, SEARCHING, CHASING, CHATTING, DRUNK, CARRYING
+        WANDERING, SEARCHING, CHASING, CHATTING, DRUNK, CARRYING, STILL
 
     }
     public enum direction {
@@ -44,8 +46,12 @@ public class PirateController : MonoBehaviour
 
     public Transform sightTransform;
 
+    GameObject newChest;
+
     void Awake()
     {
+
+        GC = GameObject.Find("Main Camera").GetComponent<GameController>();
 
         bumps = 0;
 
@@ -118,6 +124,20 @@ public class PirateController : MonoBehaviour
 
                 break;
 
+            case pirateState.STILL:
+
+                SetDirecton(direction.STILL);
+
+                if (newChest.activeSelf == false)
+                {
+
+                    SetMode(pirateState.WANDERING);
+
+                }
+
+
+                break;
+
         }
     }
 
@@ -178,16 +198,48 @@ public class PirateController : MonoBehaviour
 
     }
 
+    IEnumerator LookingAround() {
+
+        yield return new WaitForSeconds(4);
+
+        SetMode(pirateState.STILL);
+    
+    }
+
     public void DropChest() {
 
         myChest.SetActive(false);
 
-        GameObject newChest = Instantiate(chestPrefab);
+        newChest = Instantiate(chestPrefab);
 
         newChest.transform.position = this.transform.position;
+
+        newChest.GetComponent<Scammable>().setPirate(this);
     
     }
 
+    public void Anger() { 
+    
+    //pirate should shake for a few secs then, look for the player
+
+    
+    
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+
+        if (collision.gameObject.name == "PlayerParent")
+        {
+            if (state == pirateState.CHASING) {
+
+                StartCoroutine(GC.PlaySweetTalkingGame());
+
+            }
+
+        }
+
+    }
     public void SetMode(pirateState state) {
 
         this.state = state;

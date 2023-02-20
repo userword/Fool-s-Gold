@@ -6,6 +6,8 @@ public class Scammable : MonoBehaviour
 {
 
     GameController controller;
+
+    public  PirateController myPirate;
     private void Awake()
     {
 
@@ -24,6 +26,12 @@ public class Scammable : MonoBehaviour
     public bool avalible = false;
 
     public float distanceToPlayer;
+
+    public void setPirate(PirateController p) {
+
+        myPirate = p;
+    
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

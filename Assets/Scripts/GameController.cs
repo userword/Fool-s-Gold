@@ -39,6 +39,9 @@ public class GameController : MonoBehaviour
 
     public IEnumerator PlayCupGame() {
 
+        frozen = true;
+
+
         RollDice();
 
         yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final != 7);
@@ -52,6 +55,8 @@ public class GameController : MonoBehaviour
     }
     public IEnumerator PlayLockpickingGame()
     {
+
+        frozen = true;
 
         RollDice();
 
@@ -67,6 +72,7 @@ public class GameController : MonoBehaviour
 
     public IEnumerator PlaySweetTalkingGame() 
     {
+        frozen = true;
 
         RollDice();
 
@@ -81,6 +87,8 @@ public class GameController : MonoBehaviour
     }
 
     public IEnumerator PlayPickpocketingGame() {
+
+        frozen = true;
 
         RollDice();
 

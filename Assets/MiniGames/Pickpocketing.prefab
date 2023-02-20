@@ -397,7 +397,8 @@ MonoBehaviour:
   distance: 0
   lookBackDurationMin: 1
   lookBackDurationMax: 3
-  minigameTimeout: 0
+  minigameTimeout: 10
+  gc: {fileID: 0}
   playerWalk: 0
   pirateState: 0
   playerObject: {fileID: 5208181184626390014}

@@ -69,7 +69,7 @@ public class DiceRoller : MonoBehaviour
         if (next == current)
         {
 
-            RollD6Exclusive(next);
+            return RollD6Exclusive(next);
 
         }
 
@@ -121,11 +121,15 @@ public class DiceRoller : MonoBehaviour
 
             transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
 
+            final = current;
+
         }
 
         if (Vector2.Distance(transform.localPosition, EndPos) < 0.1f) {
 
-            final = current;
+
+
+            //Debug.Log("Rolled a" + final);
 
         }
 

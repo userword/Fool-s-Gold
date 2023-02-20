@@ -631,6 +631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35755f3fb44447b45be06b3b4b5373bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myPirate: {fileID: 6171565954671947600}
   typeOfScam: 0
   avalible: 0
   distanceToPlayer: 0
@@ -1189,6 +1190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35755f3fb44447b45be06b3b4b5373bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myPirate: {fileID: 6171565954671947600}
   typeOfScam: 0
   avalible: 0
   distanceToPlayer: 0

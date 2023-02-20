@@ -142,16 +142,26 @@ public class LockPicking : MonoBehaviour, MiniGame
     public void OnWin()
     {
         gameEnded = true;
-        GameManager.Singleton.OnWin();
+
         Destroy(gameObject.transform.root.gameObject);
         Destroy(gc.dicePrefabRef);
+
+        
+
+        GameManager.Singleton.OnWin();
     }
 
     public void OnLoss()
     {
         gameEnded = true;
-        GameManager.Singleton.OnLoss();
+
+        GameObject.Find("PlayerParent").GetComponent<PlayerMovement>().chosenScam.myPirate.Anger();
+
         Destroy(gameObject.transform.root.gameObject);
         Destroy(gc.dicePrefabRef);
+
+
+
+        GameManager.Singleton.OnLoss();
     }
 }
