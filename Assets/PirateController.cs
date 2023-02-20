@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class PirateController : MonoBehaviour
 {
-    public enum pirateState { 
-    
-    WANDERING, SEARCHING, CHASING, CHATTING, DRUNK, CARRYING
-    
-    }
-    public enum direction { 
-    
-    UP, DOWN, LEFT, RIGHT
+
+    public GameObject chestPrefab;
+    public GameObject myChest;
+    public enum pirateState {
+
+        WANDERING, SEARCHING, CHASING, CHATTING, DRUNK, CARRYING
 
     }
+    public enum direction {
+
+        UP, DOWN, LEFT, RIGHT
+
+    }
+
+    private int bumps;
+
+    private int bumpLimit = 1;
 
     private direction movementDirection;
 
@@ -38,6 +45,8 @@ public class PirateController : MonoBehaviour
     void Awake()
     {
 
+        bumps = 0;
+
         SetDirecton(direction.UP);
 
         state = pirateState.WANDERING;
@@ -45,6 +54,12 @@ public class PirateController : MonoBehaviour
     }
     void Update()
     {
+
+        if (bumps == bumpLimit && myChest.activeSelf) {
+
+            DropChest();
+
+        }
 
         switch (state)
         {
@@ -89,31 +104,6 @@ public class PirateController : MonoBehaviour
                 break;
 
         }
-
-        
-
-        if (state == pirateState.WANDERING) {
-
-            
-
-        }
-
-        if (state == pirateState.SEARCHING)
-        {
-
-            TurnAwayFromWall();
-
-        }
-
-        if (state == pirateState.CHASING)
-        {
-
-
-
-        }
-
-
-
     }
 
     private void FixedUpdate()
@@ -165,11 +155,26 @@ public class PirateController : MonoBehaviour
 
     }
 
+    public void DropChest() {
+
+        myChest.SetActive(false);
+
+        GameObject newChest = Instantiate(chestPrefab);
+
+        newChest.transform.position = this.transform.position;
+    
+    }
+
+    public void SetMode(pirateState state) {
+
+        this.state = state;
+
+    }
     public void TurnAwayFromWall() {
 
         if (rightCollision.contact == true && movementDirection == direction.RIGHT)
         {
-
+            bumps++;
             if (Random.Range(0, 2) == 0) {
 
                 SetDirecton(direction.UP);
@@ -185,6 +190,7 @@ public class PirateController : MonoBehaviour
 
         if (leftCollision.contact == true && movementDirection == direction.LEFT)
         {
+            bumps++;
 
             if (Random.Range(0, 2) == 0)
             {
@@ -201,6 +207,7 @@ public class PirateController : MonoBehaviour
 
         if (upperCollision.contact == true && movementDirection == direction.UP)
         {
+            bumps++;
 
             if (Random.Range(0, 2) == 0)
             {
@@ -216,6 +223,7 @@ public class PirateController : MonoBehaviour
 
         if (lowerCollision.contact == true && movementDirection == direction.DOWN)
         {
+            bumps++;
 
             if (Random.Range(0, 2) == 0)
             {

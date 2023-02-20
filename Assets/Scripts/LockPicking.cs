@@ -137,14 +137,14 @@ public class LockPicking : MonoBehaviour, MiniGame
     public void OnWin()
     {
         gameEnded = true;
-        //GameManager.Singleton.OnWin();
-        Destroy(gameObject);
+        GameManager.Singleton.OnWin();
+        Destroy(gameObject.transform.parent);
     }
 
     public void OnLoss()
     {
         gameEnded = true;
-        //GameManager.Singleton.OnLoss();
-        Destroy(gameObject);
+        GameManager.Singleton.OnLoss();
+        Destroy(gameObject.transform.parent);
     }
 }
