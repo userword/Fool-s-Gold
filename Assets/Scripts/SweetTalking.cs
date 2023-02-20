@@ -11,6 +11,8 @@ public class SweetTalking : MonoBehaviour, MiniGame{
     public float NeedScore = 0;
     public int miss = 0;
     public GameObject WinBar;
+    public GameObject WHead;
+    public GameObject LHead;
     public GameObject LoseBar;
     private bool[] HiHat = new bool [10];
     private bool[] Drum = new bool [10];
@@ -109,6 +111,8 @@ public class SweetTalking : MonoBehaviour, MiniGame{
         score += 50;
         WinBar.transform.localScale = new Vector2(WinBar.transform.localScale.x +0.5f,WinBar.transform.localScale.y);
         LoseBar.transform.localScale = new Vector2(LoseBar.transform.localScale.x +0.5f,LoseBar.transform.localScale.y);
+        WHead.transform.position = new Vector2(WHead.transform.position.x +0.5f, WHead.transform.position.y);
+        LHead.transform.position = new Vector2(LHead.transform.position.x +0.5f, WHead.transform.position.y);
         // WinBar.transform.position = new Vector2(0.5f, WinBar.transform.position.y);
         Debug.Log(score);
     }
@@ -118,6 +122,8 @@ public class SweetTalking : MonoBehaviour, MiniGame{
         miss++;
         WinBar.transform.localScale = new Vector2(WinBar.transform.localScale.x-0.5f,WinBar.transform.localScale.y);
         LoseBar.transform.localScale = new Vector2(LoseBar.transform.localScale.x -0.5f,LoseBar.transform.localScale.y);
+        WHead.transform.position = new Vector2(WHead.transform.position.x -0.5f, WHead.transform.position.y);
+        LHead.transform.position = new Vector2(LHead.transform.position.x -0.5f, WHead.transform.position.y);
         Debug.Log(miss);
     }
 
