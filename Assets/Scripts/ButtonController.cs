@@ -8,6 +8,7 @@ public class ButtonController : MonoBehaviour
     public Sprite defaultButton;
     public Sprite pressedButton;
     public KeyCode buttonPress;
+    public AudioSource sound;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,9 +20,11 @@ public class ButtonController : MonoBehaviour
     {
         if (Input.GetKeyDown(buttonPress)){
             buttonState.sprite = pressedButton;
+            sound.Play();
         }
         if (Input.GetKeyUp(buttonPress)){
             buttonState.sprite = defaultButton;
+            sound.Stop();
         }
     }
 }
