@@ -17,12 +17,16 @@ public class PlayerMovement : MonoBehaviour
 
     private List<Scammable> avalibleScams;
 
-    Scammable chosenScam;
+    public Scammable chosenScam;
 
     private void FixedUpdate()
     {
+        if (!GameController.frozen) {
 
-        Move();
+            Move();
+
+        }
+
     }
 
     private void Awake()
@@ -36,8 +40,6 @@ public class PlayerMovement : MonoBehaviour
     {
 
         HandleSelectionInputs();
-
-
 
         animator.SetFloat("Movespeed", rb.velocity.sqrMagnitude);
 

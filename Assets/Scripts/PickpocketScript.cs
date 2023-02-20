@@ -29,6 +29,8 @@ public class PickpocketScript : MonoBehaviour
     public float lookBackDurationMax;//Amount of time pirate looks back maximum.
     public float minigameTimeout; //Amount of time elapsedbefore automatic fail.
 
+    public GameController gc;
+
     //RUNTIME VARIABLES
     private float metronome; //Calculation for state changes is done every second (to avoid state changes happening too frequently).
     [SerializeField]
@@ -63,6 +65,8 @@ public class PickpocketScript : MonoBehaviour
     //TURN TO "Initialize" ONCE COMPLETED
     void Awake()
     {
+
+        gc = GameObject.Find("Main Camera").GetComponent<GameController>();
 
         //Get gameobject variables.
         playerSprite = playerObject.GetComponent<SpriteRenderer>();
@@ -112,6 +116,15 @@ public class PickpocketScript : MonoBehaviour
             //Set animation to idling
             playerWalk = false;
             playerAnimator.SetInteger("PlayerAnimState", 0); //Set animation to idling.
+        }
+
+        if (Vector2.Distance(playerObject.transform.localPosition, pirateObject.transform.localPosition) < 0.1f) {
+
+            GameManager.Singleton.OnWin();
+
+            Destroy(gc.dicePrefabRef);
+            Destroy(gameObject.transform.root.gameObject);
+
         }
 
 
@@ -166,6 +179,7 @@ public class PickpocketScript : MonoBehaviour
         else if (pirateState == 3) //looking back (after transition; nothin done when pirateState == 2)
         {
             print("HERE");
+
             if (rng < 1-aggression && metronome >= 1) //state will change!
             {
                 //There can only be transition to idle from looking back.
@@ -189,11 +203,14 @@ public class PickpocketScript : MonoBehaviour
         }
         else if (pirateState == 4) //Spotted! (failed)
         {
+
+
             print("SPOTTED");
             loseTimer -= Time.deltaTime;
             if (loseTimer <= 0)
             {
-                OnLoss();
+                // OnLoss();
+                FailState();
             }
             //Do something here?
         }
@@ -204,10 +221,22 @@ public class PickpocketScript : MonoBehaviour
         //print("END");
     }
 
+    private void FailState() {
+
+        Destroy(gc.dicePrefabRef);
+        Destroy(gameObject.transform.root.gameObject, 4);
+
+        GameObject.Find("PlayerParent").GetComponent<PlayerMovement>().chosenScam.myPirate.Anger();
+
+    }
+
+
     //Function to be called by animation event (once the transition completes to look back.
     public void ChangePirateState(int value)
     {
+
         pirateState = value;
+
     }
 
     public void OnWin()
@@ -217,11 +246,11 @@ public class PickpocketScript : MonoBehaviour
         Destroy(gameObject.transform.parent);
     }
 
-    public void OnLoss()
-    {
-        //gameEnded = true;
-        GameManager.Singleton.OnLoss();
-        Destroy(gameObject.transform.parent);
-    }
+    // public void OnLoss()
+    // {
+    //     //gameEnded = true;
+    //     GameManager.Singleton.OnLoss();
+    //     Destroy(gameObject.transform.parent);
+    // }
 
 }

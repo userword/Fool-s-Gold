@@ -21,6 +21,8 @@ public class LockPicking : MonoBehaviour, MiniGame
     [SerializeField] private float totalTime = 10f;
     [SerializeField] private float cooldownTime = 1f;
     [SerializeField] private float angleAllowance = 10f;
+
+    public GameController gc;
     private RingKeyPair current => ringKeyPairs[_currentIndex];
     private int _currentIndex;
     private int currentIndex
@@ -101,7 +103,10 @@ public class LockPicking : MonoBehaviour, MiniGame
 
     public void Initalize(int dieValue)
     {
-        float mutliplier = (dieValue - 3) / 6f;
+
+        gc = GameObject.Find("Main Camera").GetComponent<GameController>();
+
+        float mutliplier = (4 - dieValue) / 6f;
 
         foreach (RingKeyPair ringKeyPair in ringKeyPairs)
         {
@@ -137,14 +142,26 @@ public class LockPicking : MonoBehaviour, MiniGame
     public void OnWin()
     {
         gameEnded = true;
+
+        Destroy(gameObject.transform.root.gameObject);
+        Destroy(gc.dicePrefabRef);
+
+        
+
         GameManager.Singleton.OnWin();
-        Destroy(gameObject.transform.parent); 
     }
 
     public void OnLoss()
     {
         gameEnded = true;
+
+        GameObject.Find("PlayerParent").GetComponent<PlayerMovement>().chosenScam.myPirate.Anger();
+
+        Destroy(gameObject.transform.root.gameObject);
+        Destroy(gc.dicePrefabRef);
+
+
+
         GameManager.Singleton.OnLoss();
-        Destroy(gameObject.transform.parent);
     }
 }

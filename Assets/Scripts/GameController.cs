@@ -17,16 +17,13 @@ public class GameController : MonoBehaviour
 
     public GameObject cupGamePrefab;
 
+    public GameObject pickpocketingMinigamePrefab;
+
     public GameObject sweetTalkingMinigamePrefab;
 
     public GameObject lockpickingMinigamePrefab;
 
-    void Update()
-    {
-
-
-
-    }
+    void Update() { }
 
     public void RollDice() {
 
@@ -34,11 +31,16 @@ public class GameController : MonoBehaviour
 
         dicePrefabRef.transform.parent = this.transform;
 
+        dicePrefabRef.transform.position = this.transform.position + new Vector3(0f, 0f, 10f);
+
         dicePrefabRef.GetComponent<DiceShooter>().Play();
 
     }
 
     public IEnumerator PlayCupGame() {
+
+        frozen = true;
+
 
         RollDice();
 
@@ -54,6 +56,8 @@ public class GameController : MonoBehaviour
     public IEnumerator PlayLockpickingGame()
     {
 
+        frozen = true;
+
         RollDice();
 
         yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final != 7);
@@ -68,6 +72,7 @@ public class GameController : MonoBehaviour
 
     public IEnumerator PlaySweetTalkingGame() 
     {
+        frozen = true;
 
         RollDice();
 
@@ -81,7 +86,23 @@ public class GameController : MonoBehaviour
 
     }
 
-    public void PlayPickpocketingGame() { }
+    public IEnumerator PlayPickpocketingGame() {
+
+        frozen = true;
+
+        RollDice();
+
+        yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final != 7);
+
+        Debug.Log("Hello");
+
+        miniGame = Instantiate(pickpocketingMinigamePrefab);
+
+        currentRoll = dicePrefabRef.GetComponentInChildren<DiceRoller>().final;
+
+        //miniGame.GetComponentInChildren<PickpocketScript>().Initalize(currentRoll);
+
+    }
 
 
 }
