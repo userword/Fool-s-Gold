@@ -18,15 +18,17 @@ using UnityEngine.UI;
 public class PickpocketScript : MonoBehaviour
 {
 
+    //DICE ROLL VARIABLES
+    public float[] stateChangeRolls = { 0.3f, 0.35f, 0.4f, 0.5f, 0.6f, 0.7f }; //Based on dice roll, the value of stateChange (only 6).
+    public float[] aggressionRolls = {0.2f, 0.25f, 0.3f, 0.35f, 0.4f, 0.5f}; //Based on dice roll, the value of aggression (only 6).
+
     //SETUP VARIABLES
     [Range(0, 1)]
-    public float stateChange; //probability of a state changing from one to another per second(0-1)
+    private float stateChange; //probability of a state changing from one to another per second(0-1) (dice roll will determine this. Otherwise, change for testing.
     [Range(0, 1)]
-    public float aggression; //probability of the state changing to looking back (0-1). Otherwise, transitions to fidgeting.
+    private float aggression; //probability of the state changing to looking back (0-1). Otherwise, transitions to fidgeting.
     public float walk_speed = 10; //determines the movement speed of the player.
     public float distance; //Starting distance between pirate and player.
-    public float lookBackDurationMin; //Amount of time pirate looks back minimum.
-    public float lookBackDurationMax;//Amount of time pirate looks back maximum.
     public float minigameTimeout; //Amount of time elapsedbefore automatic fail.
 
     public GameController gc;
@@ -61,7 +63,7 @@ public class PickpocketScript : MonoBehaviour
 
     // Initialize the positions of the pirate from the player.
     //TURN TO "Initialize" ONCE COMPLETED
-    void Awake()
+    public void Initialize(int diceRoll)
     {
 
         gc = GameObject.Find("Main Camera").GetComponent<GameController>();
@@ -74,6 +76,8 @@ public class PickpocketScript : MonoBehaviour
         playerImage = playerObject.GetComponent<Image>();
         pirateImage = pirateObject.GetComponent<Image>();
         totalClock = totalTime;
+
+        //Dice roll affects the pirate's aggression and statechange levels.
 
     }
 
