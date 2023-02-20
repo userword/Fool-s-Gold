@@ -31,21 +31,15 @@ public class PickpocketScript : MonoBehaviour
 
     //RUNTIME VARIABLES
     private float metronome; //Calculation for state changes is done every second (to avoid state changes happening too frequently).
-    private float elapsed = 0f; //time elapsed since start of minigame. Used for all timings.
     [SerializeField]
     private bool playerWalk = false; //player walking state. True if walking.
-    //[SerializeField] (NOT NEEDED?)
-    //private int thiefState = 0; // 0 - Idle
-    //                            // 1 - Walking
-    //                            // 2 - Spotted
-    //                            // 3 - Spotted! (Lose)
     [SerializeField]
     private int pirateState = 0; // 0 - Idle
                                  // 1 - Fidget
                                  // 2 - Transition To Look Behind ( for the animation to complete)
                                  // 3 - Look behind
                                  // 4 - Spotted! (Lose)
-    //private float pirateTimer; //timer for the pirate to stay in that state.
+    private float loseTimer = 2; // simply countsdown before calling the on-loss (2 sec default)
                                
 
 
@@ -58,6 +52,10 @@ public class PickpocketScript : MonoBehaviour
     private Animator pirateAnimator; //Note: Shares state variables with pirateState.
     private Image playerImage; //To render on Canvas (must be image!)
     private Image pirateImage; //To render on Canvas
+    private float totalClock; //time left for the player.
+    [SerializeField] private Slider timeBar; //Pulled from lockpick.
+    [SerializeField] private Image timeBarFillArea;
+    [SerializeField] private float totalTime = 10f;
 
 
 
@@ -73,32 +71,42 @@ public class PickpocketScript : MonoBehaviour
         playerAnimator = playerObject.GetComponent<Animator>();
         playerImage = playerObject.GetComponent<Image>();
         pirateImage = pirateObject.GetComponent<Image>();
-
+        totalClock = totalTime;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        elapsed += Time.deltaTime;
         metronome += Time.deltaTime;
 
-        if (elapsed > minigameTimeout) //went past the time limit.
+        // update clocks
+        totalClock = Mathf.Clamp(totalClock - Time.deltaTime, 0, totalTime);
+        timeBar.value = totalClock / totalTime;
+
+        if (totalClock == 0)
         {
-            //Failure state.
+            pirateState = 4;
+            pirateAnimator.SetInteger("PirateAnimState", 4);
+            playerAnimator.SetInteger("PlayerAnimState", 2);
         }
 
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (playerObject.transform.position.x >= pirateObject.transform.position.x - 100)
+        {
+            //WINNER!
+            OnWin();
+        }
+
+        if (Input.GetKey(KeyCode.RightArrow) && pirateState != 4)
         {
             //Move player to the right based on walkspeed * deltatime
             // e.g. player.transform.position += walkspeed * Time.deltaTime;
             //And set the animation to sneaking
-            //print("WALKING");
             playerWalk = true;
             playerObject.transform.position += new Vector3(walk_speed * Time.deltaTime, 0, 0);
             playerAnimator.SetInteger("PlayerAnimState", 1); //set animation to walking.
         }
-        if (Input.GetKeyUp(KeyCode.RightArrow))
+        if (Input.GetKeyUp(KeyCode.RightArrow) && pirateState != 4)
         {
             //Player no longer walking
             //Set animation to idling
@@ -122,7 +130,6 @@ public class PickpocketScript : MonoBehaviour
                     pirateAnimator.SetInteger("PirateAnimState", 2); //Trigger Look Behind animation.
                     //trigger animation change to look back here.
                     //The animation event will call ChangePirateState() and change pirateState to the appropriate value.
-                    //pirateTimer = Random.Range(lookBackDurationMin, lookBackDurationMax); //init timer for look back.
                 }
                 else //fidget!
                 {
@@ -146,7 +153,6 @@ public class PickpocketScript : MonoBehaviour
                     pirateAnimator.SetInteger("PirateAnimState", 2); //Trigger Look Behind animation.
                     //trigger animation change to look back here.
                     //The animation event will call ChangePirateState() and change pirateState to the appropriate value.
-                    //pirateTimer = Random.Range(lookBackDurationMin, lookBackDurationMax); //init timer for look back.
                 }
                 else //Return to idle.
                 {
@@ -160,16 +166,6 @@ public class PickpocketScript : MonoBehaviour
         else if (pirateState == 3) //looking back (after transition; nothin done when pirateState == 2)
         {
             print("HERE");
-            //print(pirateTimer);
-            //if (pirateTimer <= 0)
-            //{
-            //    //transition to idle again.
-            //    pirateTimer = 0;
-            //    metronome = 0;
-            //    print("RETURN: " + pirateTimer);
-            //    pirateState = 0; //idle
-            //    pirateAnimator.SetInteger("PirateAnimState", 0);
-            //}
             if (rng < 1-aggression && metronome >= 1) //state will change!
             {
                 //There can only be transition to idle from looking back.
@@ -194,6 +190,11 @@ public class PickpocketScript : MonoBehaviour
         else if (pirateState == 4) //Spotted! (failed)
         {
             print("SPOTTED");
+            loseTimer -= Time.deltaTime;
+            if (loseTimer <= 0)
+            {
+                OnLoss();
+            }
             //Do something here?
         }
 
@@ -207,6 +208,20 @@ public class PickpocketScript : MonoBehaviour
     public void ChangePirateState(int value)
     {
         pirateState = value;
+    }
+
+    public void OnWin()
+    {
+        //gameEnded = true;
+        GameManager.Singleton.OnWin();
+        Destroy(gameObject.transform.parent);
+    }
+
+    public void OnLoss()
+    {
+        //gameEnded = true;
+        GameManager.Singleton.OnLoss();
+        Destroy(gameObject.transform.parent);
     }
 
 }
