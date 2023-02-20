@@ -221,14 +221,6 @@ public class PickpocketScript : MonoBehaviour
         //print("END");
     }
 
-    private void FailState() {
-
-        Destroy(gc.dicePrefabRef);
-        Destroy(gameObject.transform.root.gameObject, 4);
-
-        GameObject.Find("PlayerParent").GetComponent<PlayerMovement>().chosenScam.myPirate.Anger();
-
-    }
 
 
     //Function to be called by animation event (once the transition completes to look back.
@@ -244,6 +236,16 @@ public class PickpocketScript : MonoBehaviour
         //gameEnded = true;
         GameManager.Singleton.OnWin();
         Destroy(gameObject.transform.parent);
+    }
+
+    private void FailState()
+    {
+
+        Destroy(gc.dicePrefabRef);
+        Destroy(gameObject.transform.root.gameObject, 4);
+
+        GameObject.Find("PlayerParent").GetComponent<PlayerMovement>().chosenScam.myPirate.Anger();
+
     }
 
     // public void OnLoss()
