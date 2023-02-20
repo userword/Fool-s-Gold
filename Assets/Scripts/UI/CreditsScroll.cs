@@ -70,8 +70,9 @@ public class CreditsScroll : MonoBehaviour
         {
             CreditData current = movingCredits[i];
             // if this one if 25% of the way down, then we start to send the next one down as well
-            current.transform.position = Vector3.MoveTowards(current.transform.position, bottomRect.position, Time.deltaTime * speed);
-
+            float speedAdjusted = speed * (topRect.transform.position - bottomRect.position).magnitude/500;
+            current.transform.position = Vector3.MoveTowards(current.transform.position, bottomRect.position, Time.deltaTime * speedAdjusted);
+            Debug.Log(current.transform.position - bottomRect.position);
             float totalDistance = Vector3.Distance(topRect.position, bottomRect.position);
             float distance = Vector3.Distance(current.transform.position, topRect.position);
             float percent = 1 - (totalDistance - distance) / totalDistance;
