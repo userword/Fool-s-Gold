@@ -41,7 +41,7 @@ public class SweetTalking : MonoBehaviour, MiniGame{
         // NeedText.text = "Needed To Wind: " + NeedScore;
         // missesAllowed.text = "Misses Allowed: " + miss;
         instance = this;
-        result.text = "";
+        result.text = "Press any buttton to begin, matey!";
         for (int i = 0; i <20; i++){
             HiHat[i] = (Random.Range(0,2) != 0);
             Drum[i] = (Random.Range(0,2) != 0);
