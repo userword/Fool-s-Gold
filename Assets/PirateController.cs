@@ -109,6 +109,13 @@ public class PirateController : MonoBehaviour
 
                 SetDirecton(direction.STILL);
 
+                if (!chatHandler.chatting)
+                {
+
+                    state = pirateState.WANDERING;
+
+                }
+
                 break;
 
             case pirateState.DRUNK:
@@ -205,6 +212,15 @@ public class PirateController : MonoBehaviour
         SetMode(pirateState.STILL);
     
     }
+    IEnumerator Chat()
+    {
+
+        yield return new WaitForSeconds(10);
+
+        SetMode(pirateState.WANDERING);
+
+    }
+
 
     public void DropChest() {
 

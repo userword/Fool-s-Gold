@@ -15,6 +15,7 @@ public class ChatboxFlicker : MonoBehaviour
 
     }
 
+
     public IEnumerator Flicker() {
 
         if (flickering)
@@ -22,7 +23,7 @@ public class ChatboxFlicker : MonoBehaviour
 
             sr.enabled = false;
 
-            yield return new WaitForSeconds(Random.Range(1, 2));
+            yield return new WaitForSeconds(Random.Range(0, 2));
 
             sr.enabled = true;
 
@@ -31,6 +32,7 @@ public class ChatboxFlicker : MonoBehaviour
         StartCoroutine(Flicker());
 
     }
+
     public void Show() {
 
         sr.enabled = true;
