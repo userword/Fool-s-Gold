@@ -11017,10 +11017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 228ee198be4ebc8448e51d1b31b0cb34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 2111108493}
   movespeed: 3
-  animator: {fileID: 1496904651}
-  chosenScam: {fileID: 0}
 --- !u!50 &2111108493
 Rigidbody2D:
   serializedVersion: 4
