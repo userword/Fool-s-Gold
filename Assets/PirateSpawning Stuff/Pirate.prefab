@@ -518,6 +518,7 @@ GameObject:
   - component: {fileID: 3242129791763639186}
   - component: {fileID: 1721695562871721895}
   - component: {fileID: 5344442727394517108}
+  - component: {fileID: 8698067958781143794}
   m_Layer: 0
   m_Name: LXmarks
   m_TagString: Untagged
@@ -618,6 +619,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8698067958781143794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888845026617302890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35755f3fb44447b45be06b3b4b5373bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typeOfScam: 0
+  avalible: 0
+  distanceToPlayer: 0
 --- !u!1 &1972086553072779148
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,7 +844,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.4377358, g: 1, b: 0.51716, a: 1}
+  m_Color: {r: 0.4377358, g: 1, b: 0.51716, a: 0.0627451}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -880,6 +896,7 @@ MonoBehaviour:
   RXmarks: {fileID: 6668788177554835733}
   LTextBox: {fileID: 7011231977421933093}
   RTextBox: {fileID: 7449928582270772670}
+  chatting: 0
 --- !u!50 &8769752775798474524
 Rigidbody2D:
   serializedVersion: 4
@@ -1059,6 +1076,7 @@ GameObject:
   - component: {fileID: 2979370420958954962}
   - component: {fileID: 8466238919297504107}
   - component: {fileID: 552574707364960502}
+  - component: {fileID: 948145706913856592}
   m_Layer: 0
   m_Name: RXmarks
   m_TagString: Untagged
@@ -1159,6 +1177,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &948145706913856592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6668788177554835733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35755f3fb44447b45be06b3b4b5373bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typeOfScam: 0
+  avalible: 0
+  distanceToPlayer: 0
 --- !u!1 &6893992621308494617
 GameObject:
   m_ObjectHideFlags: 0

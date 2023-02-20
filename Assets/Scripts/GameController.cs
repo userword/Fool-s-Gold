@@ -21,12 +21,7 @@ public class GameController : MonoBehaviour
 
     public GameObject lockpickingMinigamePrefab;
 
-    void Update()
-    {
-
-
-
-    }
+    void Update() { }
 
     public void RollDice() {
 
@@ -81,7 +76,20 @@ public class GameController : MonoBehaviour
 
     }
 
-    public void PlayPickpocketingGame() { }
+    public IEnumerator PlayPickpocketingGame() {
+
+        RollDice();
+
+        yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final != 7);
+
+        miniGame = Instantiate(sweetTalkingMinigamePrefab);
+
+        currentRoll = dicePrefabRef.GetComponentInChildren<DiceRoller>().final;
+
+        miniGame.GetComponentInChildren<SweetTalking>().Initalize(currentRoll);
+
+
+    }
 
 
 }
