@@ -17,9 +17,9 @@ public class SweetTalking : MonoBehaviour, MiniGame{
     public GameObject Afool;
     public GameObject pirate;
     public GameObject LoseBar;
-    private bool[] HiHat = new bool [10];
-    private bool[] Drum = new bool [10];
-    private bool[] Bass = new bool [10];
+    private bool[] HiHat = new bool [20];
+    private bool[] Drum = new bool [20];
+    private bool[] Bass = new bool [20];
     public NoteObject notesA;
     public NoteObject  notesS;
     public NoteObject notesSpace;
@@ -32,7 +32,7 @@ public class SweetTalking : MonoBehaviour, MiniGame{
     public static SweetTalking instance;
     // Start is called before the first frame update
     private void Start(){
-        Initalize(3);
+        Initalize(6); // comment this out to have dice roll matter
     }
 
     public void Initalize(int dieValue)
@@ -42,13 +42,13 @@ public class SweetTalking : MonoBehaviour, MiniGame{
         // missesAllowed.text = "Misses Allowed: " + miss;
         instance = this;
         result.text = "";
-        for (int i = 0; i <10; i++){
+        for (int i = 0; i <20; i++){
             HiHat[i] = (Random.Range(0,2) != 0);
             Drum[i] = (Random.Range(0,2) != 0);
             Bass[i] = (Random.Range(0,2) != 0);
         }
          float ypos = notesA.transform.position.y;
-         for (int i = 0; i <10; i++){
+         for (int i = 0; i <20; i++){
             Debug.Log(HiHat[i]);
             if (HiHat[i]){
                 Totalnotes++;
@@ -82,7 +82,11 @@ public class SweetTalking : MonoBehaviour, MiniGame{
         NeedScore *= 0.5f;
         Debug.Log("NeedScore: " + NeedScore);
         Debug.Log("Total Notes: " + Totalnotes);
-        NT.BPM = (dieValue);
+
+        NT.BPM = (6.5f - dieValue);
+        if (NT.BPM < 2){
+           NT.BPM += 1.5f;
+        }
     }
 
     // Update is called once per frame
@@ -104,7 +108,7 @@ public class SweetTalking : MonoBehaviour, MiniGame{
             return;
         }
         if (Totalnotes == 0){
-            if (score >= NeedScore){
+            if (Mathf.Abs(WinBar.transform.localScale.x)> Mathf.Abs(LoseBar.transform.localScale.x)){
             // NT.BPM = 0;
                 OnWin();
                 return;
