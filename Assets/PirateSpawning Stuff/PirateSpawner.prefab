@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0d1e9ae8f703b843b72bb7d46622f12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  piratePrefab: {fileID: 9044893648815282458, guid: ba9c529a51c6c7046a7047744079552c, type: 3}
+  defaultDirection: 0
