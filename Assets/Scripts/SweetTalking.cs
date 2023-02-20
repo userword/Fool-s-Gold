@@ -97,7 +97,7 @@ public class SweetTalking : MonoBehaviour, MiniGame{
                 musicPlay.Play();
             }
         }
-        if (miss == 10){
+        if (miss >= 10){
             NT.BPM = 0;
             OnLoss();
             return;
