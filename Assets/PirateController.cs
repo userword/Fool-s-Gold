@@ -114,6 +114,11 @@ public class PirateController : MonoBehaviour
 
                 sightTransform.right = sightHandler.TargetPos - (Vector2)transform.position;
 
+                if (!sightHandler.found)
+                {
+                    state = pirateState.SEARCHING;
+                }
+
                 break;
 
             case pirateState.CHATTING:
