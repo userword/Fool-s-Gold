@@ -45,6 +45,11 @@ public class GameManager : MonoBehaviour
         GameController.frozen = false;
 
         score += 10 * (7 - gc.currentRoll);
+
+        Debug.Log(score);
+
+        print(gc.currentRoll);
+
         scoreCounterText.text = score.ToString();
         Debug.Log("player won a game!");
 
