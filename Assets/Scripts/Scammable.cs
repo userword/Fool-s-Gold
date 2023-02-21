@@ -83,7 +83,7 @@ public class Scammable : MonoBehaviour
         switch (typeOfScam) {
 
             case scamType.Pickpocketing:
-                StartCoroutine(controller.PlayPickpocketingGame());
+                controller.PlayPickpocketingGame();
 
                 break;
 
