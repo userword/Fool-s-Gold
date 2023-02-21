@@ -43,11 +43,14 @@ public class GameController : MonoBehaviour
 
         RollDice();
 
+
         yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final != 7);
+
+
+        currentRoll = dicePrefabRef.GetComponentInChildren<DiceRoller>().final;
 
         miniGame = Instantiate(cupGamePrefab);
 
-        currentRoll = dicePrefabRef.GetComponentInChildren<DiceRoller>().final;
 
         miniGame.GetComponent<CupGame>().Initalize(currentRoll);
 
@@ -59,11 +62,15 @@ public class GameController : MonoBehaviour
 
         RollDice();
 
+
         yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final < 7);
+
+        currentRoll = dicePrefabRef.GetComponentInChildren<DiceRoller>().final;
 
         miniGame = Instantiate(lockpickingMinigamePrefab);
 
-        currentRoll = dicePrefabRef.GetComponentInChildren<DiceRoller>().final;
+
+
 
         miniGame.GetComponentInChildren<LockPicking>().Initalize(currentRoll);
 
@@ -75,11 +82,16 @@ public class GameController : MonoBehaviour
 
         RollDice();
 
+
+
         yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final != 7);
 
-        miniGame = Instantiate(sweetTalkingMinigamePrefab);
 
         currentRoll = dicePrefabRef.GetComponentInChildren<DiceRoller>().final;
+
+
+
+        miniGame = Instantiate(sweetTalkingMinigamePrefab);
 
         miniGame.GetComponentInChildren<SweetTalking>().Initalize(currentRoll);
 
@@ -107,9 +119,9 @@ public class GameController : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(2);
 
-        miniGame = Instantiate(pickpocketingMinigamePrefab);
-
         currentRoll = dicePrefabRef.GetComponentInChildren<DiceRoller>().final;
+
+        miniGame = Instantiate(pickpocketingMinigamePrefab);
 
         miniGame.GetComponentInChildren<PickpocketScript>().Initialize(currentRoll);
 

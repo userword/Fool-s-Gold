@@ -8,7 +8,7 @@ public class DiceRoller : MonoBehaviour
 
     int current;
 
-    public int final = 7; 
+    public int final; 
 
     int numBounces = 0;
 
@@ -22,7 +22,6 @@ public class DiceRoller : MonoBehaviour
     Quaternion EndRotaion = new Quaternion(0f, 0f, 0f, 0f);
 
     void Awake() {
-
 
 
         current = RollD6();
