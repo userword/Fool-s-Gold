@@ -1703,7 +1703,9 @@ MonoBehaviour:
   percentTillNext: 0.25
   alphaFrequency: 2
   credits:
-  - John Doe, Art
+  - 'Toni Faseemo, Game Design '
+  - Muhammad Arfan Maulana, Programming and Art
+  - Jack Weigl, Programming
 --- !u!1 &1605424504
 GameObject:
   m_ObjectHideFlags: 0
