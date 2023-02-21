@@ -160,6 +160,7 @@ public class SweetTalking : MonoBehaviour, MiniGame{
         gameEnded = true;
         // GameManager.Singleton.OnWin();
         result.text = "You Win!";
+        GameManager.Singleton.OnWin();
         Invoke("Kill", 1.5f);
     }
 
@@ -168,6 +169,7 @@ public class SweetTalking : MonoBehaviour, MiniGame{
         gameEnded = true;
         // GameManager.Singleton.OnLoss();
         result.text = "You Lose!";
+        GameManager.Singleton.OnLoss();
         Invoke("Kill", 1.5f);
     }
 
