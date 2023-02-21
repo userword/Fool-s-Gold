@@ -46,6 +46,8 @@ public class PirateController : MonoBehaviour
 
     public Transform sightTransform;
 
+    public Animator anim;
+
     GameObject newChest;
 
     void Awake()
@@ -74,6 +76,9 @@ public class PirateController : MonoBehaviour
 
             case pirateState.WANDERING:
 
+
+                anim.SetInteger("PirateAnimState", 0);
+
                 TurnAwayFromWall();
 
                 if (chatHandler.chatting) {
@@ -86,6 +91,10 @@ public class PirateController : MonoBehaviour
 
             case pirateState.SEARCHING:
 
+                anim.SetInteger("PirateAnimState", 0);
+
+                speed = 1.1f;
+
                 TurnAwayFromWall();
 
                 if (sightHandler.found)
@@ -97,6 +106,8 @@ public class PirateController : MonoBehaviour
 
             case pirateState.CHASING:
 
+                anim.SetInteger("PirateAnimState", 2);
+
                 speed = 1.5f;
 
                 movement = (sightHandler.TargetPos - (Vector2)transform.position).normalized;
@@ -106,6 +117,7 @@ public class PirateController : MonoBehaviour
                 break;
 
             case pirateState.CHATTING:
+                anim.SetInteger("PirateAnimState", 3);
 
                 state = pirateState.STILL;
 
@@ -134,6 +146,8 @@ public class PirateController : MonoBehaviour
 
             case pirateState.DRUNK:
 
+                anim.SetInteger("PirateAnimState", 1);
+
                 speed = 0.5f;
 
                 TurnAwayFromWall();
@@ -142,10 +156,13 @@ public class PirateController : MonoBehaviour
 
             case pirateState.CARRYING:
 
+                anim.SetInteger("PirateAnimState", 0);
 
                 break;
 
             case pirateState.STILL:
+
+                anim.SetInteger("PirateAnimState", 0);
 
                 SetDirecton(direction.STILL);
 

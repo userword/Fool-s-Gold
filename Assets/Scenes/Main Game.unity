@@ -206,7 +206,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4729444064313424856, guid: 9876ebfd11cf7644c8688b50eacaa218, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.7410817
+      value: -2.69
       objectReference: {fileID: 0}
     - target: {fileID: 4729444064313424856, guid: 9876ebfd11cf7644c8688b50eacaa218, type: 3}
       propertyPath: m_LocalPosition.y
@@ -504,6 +504,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 240788561}
+  - component: {fileID: 240788562}
   m_Layer: 5
   m_Name: Menus
   m_TagString: Untagged
@@ -533,6 +534,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &240788562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240788560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29273a9ce64cc48bfa736b1d5bc0703a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BoostBar: {fileID: 1372772355}
 --- !u!1001 &307542149
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11372,6 +11386,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movespeed: 3
+  boostMutliplier: 2
+  boostDuration: 2
+  boostRechargeSpeed: 0.5
+  boostRechargeDelay: 2
 --- !u!50 &2111108493
 Rigidbody2D:
   serializedVersion: 4
