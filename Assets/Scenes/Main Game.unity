@@ -1218,7 +1218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gc: {fileID: 0}
   score: 0
-  scoreCounterText: {fileID: 0}
+  scoreCounterText: {fileID: 1885685065}
   diceRollPrefab: {fileID: 0}
   lockPickingPrefab: {fileID: 0}
 --- !u!114 &519420036
