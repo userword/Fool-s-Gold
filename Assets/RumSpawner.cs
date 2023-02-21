@@ -6,6 +6,8 @@ public class RumSpawner : MonoBehaviour
 {
     // Start is called before the first frame update
 
+    public GameObject RumPrefab;
+
     public GameObject Rum;
 
     public float waittime, waitrange;

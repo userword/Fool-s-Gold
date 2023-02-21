@@ -85,7 +85,8 @@ public class GameController : MonoBehaviour
 
     }
 
-    public IEnumerator PlayPickpocketingGame() {
+
+    public void PlayPickpocketingGame() {
 
         frozen = true;
 
@@ -95,16 +96,22 @@ public class GameController : MonoBehaviour
 
         //yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final != 7);
 
-        yield return new WaitForSecondsRealtime(2);
+        //yield return new WaitForSecondsRealtime(2);
 
         Debug.Log("Done");
+
+        StartCoroutine(PlayPickpocketingGameP());
+
+    }
+    public IEnumerator PlayPickpocketingGameP() {
+
+        yield return new WaitForSecondsRealtime(2);
 
         miniGame = Instantiate(pickpocketingMinigamePrefab);
 
         currentRoll = dicePrefabRef.GetComponentInChildren<DiceRoller>().final;
 
         miniGame.GetComponentInChildren<PickpocketScript>().Initialize(currentRoll);
-
 
     }
 
