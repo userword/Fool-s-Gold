@@ -269,11 +269,11 @@ public class PirateController : MonoBehaviour
     
     }
 
-    public void Anger() { 
-    
-    //pirate should shake for a few secs then, look for the player
+    public void Anger() {
 
-    
+        //pirate should shake for a few secs then, look for the player
+
+        state = pirateState.SEARCHING;
     
     }
 

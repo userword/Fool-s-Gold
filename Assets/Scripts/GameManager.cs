@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 
    public GameController gc;
 
+    public PlayerMovement player;
+
     public int score = 0;
     public TMPro.TextMeshProUGUI scoreCounterText;
 
@@ -35,6 +37,8 @@ public class GameManager : MonoBehaviour
 
         gc = GameObject.Find("Main Camera").GetComponent<GameController>();
 
+        player = GameObject.Find("PlayerParent").GetComponent<PlayerMovement>();
+
         scoreCounterText = GameObject.Find("ScoreText").GetComponentInChildren<TMPro.TextMeshProUGUI>();
 
     }
@@ -57,6 +61,8 @@ public class GameManager : MonoBehaviour
 
     public void OnLoss()
     {
+
+        player.chosenScam.Loss();
 
         GameController.frozen = false;
 

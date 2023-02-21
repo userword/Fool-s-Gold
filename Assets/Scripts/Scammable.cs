@@ -76,6 +76,12 @@ public class Scammable : MonoBehaviour
         }
 
     }
+
+    public void Loss() {
+
+        myPirate.Anger();
+    
+    }
     public void Go() {
 
         Debug.Log(typeOfScam + "\n");
