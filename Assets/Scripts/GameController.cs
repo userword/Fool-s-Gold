@@ -93,6 +93,9 @@ public class GameController : MonoBehaviour
 
         Debug.Log("Waiting");
 
+        //yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final != 7);
+
+        yield return new WaitForSecondsRealtime(2);
 
         Debug.Log("Done");
 
@@ -101,6 +104,10 @@ public class GameController : MonoBehaviour
         currentRoll = dicePrefabRef.GetComponentInChildren<DiceRoller>().final;
 
         miniGame.GetComponentInChildren<PickpocketScript>().Initialize(currentRoll);
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
     }
 
