@@ -546,7 +546,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29273a9ce64cc48bfa736b1d5bc0703a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BoostBar: {fileID: 1372772355}
+  boostBar: {fileID: 1372772355}
+  hideBarDelay: 2
 --- !u!1001 &307542149
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1215,6 +1216,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a82301eda3cda460ba8cb4981a781f08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gc: {fileID: 0}
+  score: 0
+  scoreCounterText: {fileID: 0}
   diceRollPrefab: {fileID: 0}
   lockPickingPrefab: {fileID: 0}
 --- !u!114 &519420036

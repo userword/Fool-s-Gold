@@ -23,8 +23,9 @@ public class PlayerMovement : MonoBehaviour
         get => _boostClock;
         set
         {
+            if (value != _boostClock)
+                GameMenu.Singleton.UpdateBoostBar(boostClock / boostDuration);
             _boostClock = value;
-            GameMenu.Singleton.UpdateBoostBar(boostClock / boostDuration);
         }
     }
     private float boostRechargeClock;
