@@ -32,7 +32,7 @@ public class SweetTalking : MonoBehaviour, MiniGame{
     public static SweetTalking instance;
     // Start is called before the first frame update
     private void Start(){
-       // Initalize(6); // comment this out to have dice roll matter
+        Initalize(6); // comment this out to have dice roll matter
     }
 
     public void Initalize(int dieValue)
