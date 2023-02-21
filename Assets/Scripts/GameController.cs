@@ -60,6 +60,7 @@ public class GameController : MonoBehaviour
         RollDice();
 
         yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final != 7);
+        yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final < 7);
 
         miniGame = Instantiate(lockpickingMinigamePrefab);
 
