@@ -59,7 +59,6 @@ public class GameController : MonoBehaviour
 
         RollDice();
 
-        yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final != 7);
         yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final < 7);
 
         miniGame = Instantiate(lockpickingMinigamePrefab);
@@ -105,10 +104,7 @@ public class GameController : MonoBehaviour
         currentRoll = dicePrefabRef.GetComponentInChildren<DiceRoller>().final;
 
         miniGame.GetComponentInChildren<PickpocketScript>().Initialize(currentRoll);
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 
     }
 
