@@ -26,14 +26,6 @@ public class MusicHandler : MonoBehaviour
         if (!start && !letRunA){
             loop_A_Music.Play();
             letRunA = true;
-            if (!loop_A_Music.isPlaying && !letRunB){
-                loop_B_Music.Play();
-                letRunB = true;
-            }
-            if (!loop_B_Music.isPlaying && !loop_A_Music.isPlaying){
-                loop_A_Music.Play();
-                letRunA = true;
-            }
         }
         if (!musicToPlay.isPlaying){
             start = false;
