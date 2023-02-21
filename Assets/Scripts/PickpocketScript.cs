@@ -238,7 +238,8 @@ public class PickpocketScript : MonoBehaviour
     {
         //gameEnded = true;
         GameManager.Singleton.OnWin();
-        Destroy(gameObject.transform.parent);
+        Destroy(gc.dicePrefabRef);
+        Destroy(gameObject.transform.root.gameObject);
     }
 
     private void FailState()

@@ -41,7 +41,6 @@ public class GameController : MonoBehaviour
 
         frozen = true;
 
-
         RollDice();
 
         yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final != 7);
@@ -94,7 +93,6 @@ public class GameController : MonoBehaviour
 
         Debug.Log("Waiting");
 
-        yield return new WaitUntil(() => dicePrefabRef.GetComponentInChildren<DiceRoller>().final != 7);
 
         Debug.Log("Done");
 

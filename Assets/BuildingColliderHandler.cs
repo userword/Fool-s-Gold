@@ -24,13 +24,23 @@ public class BuildingColliderHandler : MonoBehaviour
 
         if (collision.gameObject.TryGetComponent(out Rigidbody2D rb2D))
         {
-            if (rb2D.bodyType == RigidbodyType2D.Static)
+
+           // StartCoroutinPause();
+
+            if (rb2D.bodyType == RigidbodyType2D.Static )
             {
 
                 contact = true;
-                Pause();
+               Pause();
 
             }
+
+            if (collision.gameObject.name == "PlayerParent") {
+
+                contact = true;
+
+            }
+
         }
     }
 

@@ -23,6 +23,8 @@ public class DiceRoller : MonoBehaviour
 
     void Awake() {
 
+
+
         current = RollD6();
 
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
@@ -36,9 +38,8 @@ public class DiceRoller : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
-       // if (collision.gameObject.name == "Floor")
+       //if (collision.gameObject.name == "Floor")
             
-
             if (numBounces < 6)
             {
 
@@ -46,8 +47,11 @@ public class DiceRoller : MonoBehaviour
 
                 numBounces++;
 
+               Debug.Log("Rolled a " + current);
 
-            } else {
+
+        }
+        else {
 
                 rb.simulated = false;
             
@@ -58,7 +62,7 @@ public class DiceRoller : MonoBehaviour
 
     public int RollD6() {
 
-        return (int)Random.Range(1, 6);
+        return Random.Range(1, 7);
     
     }
 
@@ -129,7 +133,7 @@ public class DiceRoller : MonoBehaviour
 
 
 
-            //Debug.Log("Rolled a" + final);
+
 
         }
 
