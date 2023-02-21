@@ -22,7 +22,7 @@ public class PirateController : MonoBehaviour
 
     private int bumps;
 
-    private int bumpLimit = 1;
+    private int bumpLimit = 5;
 
     private direction movementDirection;
 
