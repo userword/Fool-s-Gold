@@ -5,19 +5,13 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
-    GameController GC;
-
-    public Rigidbody2D rb;
-
-    public float movespeed;
-
-    Vector2 moveDirection;
-
-    public Animator animator;
-
+    [SerializeField] private float movespeed;
+    public Scammable chosenScam {get; private set;}
+    private Rigidbody2D rb;
+    private Animator animator;
+    private Vector2 moveDirection;
     private List<Scammable> avalibleScams;
-
-    public Scammable chosenScam;
+    private GameController GC;
 
     private void FixedUpdate()
     {
@@ -34,7 +28,8 @@ public class PlayerMovement : MonoBehaviour
         avalibleScams = new List<Scammable>();
 
         GC = GameObject.Find("Main Camera").GetComponent<GameController>();
-
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>();
     }
     private void Update()
     {

@@ -53,10 +53,6 @@ public class LockPicking : MonoBehaviour, MiniGame
     private float cooldownClock;
     private bool gameEnded = true;
 
-    private void Start() {
-        Initalize(6);
-    }
-
     private void Update() 
     {
         if (gameEnded)
@@ -103,19 +99,15 @@ public class LockPicking : MonoBehaviour, MiniGame
 
     public void Initalize(int dieValue)
     {
-
         gc = GameObject.Find("Main Camera").GetComponent<GameController>();
 
         float mutliplier = (4 - dieValue) / 6f;
-
         foreach (RingKeyPair ringKeyPair in ringKeyPairs)
         {
-
             float velocityDelta = ringKeyPair.angularVelocity * mutliplier;
             ringKeyPair.angularVelocity += velocityDelta;
 
         }
-
         Initalize();
     }
 
@@ -146,8 +138,6 @@ public class LockPicking : MonoBehaviour, MiniGame
         Destroy(gameObject.transform.root.gameObject);
         Destroy(gc.dicePrefabRef);
 
-        
-
         GameManager.Singleton.OnWin();
     }
 
@@ -159,8 +149,6 @@ public class LockPicking : MonoBehaviour, MiniGame
 
         Destroy(gameObject.transform.root.gameObject);
         Destroy(gc.dicePrefabRef);
-
-
 
         GameManager.Singleton.OnLoss();
     }
