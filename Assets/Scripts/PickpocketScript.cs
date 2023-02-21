@@ -78,8 +78,8 @@ public class PickpocketScript : MonoBehaviour
         totalClock = totalTime;
 
         //Dice roll affects the pirate's aggression and statechange levels.
-        stateChange = stateChangeRolls[5 - diceRoll];
-        aggression = aggressionRolls[5 - diceRoll];
+        stateChange = stateChangeRolls[7 - diceRoll];
+        aggression = aggressionRolls[7 - diceRoll];
     }
 
     // Update is called once per frame

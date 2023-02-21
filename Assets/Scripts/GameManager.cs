@@ -34,7 +34,8 @@ public class GameManager : MonoBehaviour
         Singleton = this;
 
         gc = GameObject.Find("Main Camera").GetComponent<GameController>();
-        scoreCounterText = GameObject.Find("ScoreCounter").GetComponent<TMPro.TextMeshProUGUI>();
+
+        scoreCounterText = GameObject.Find("ScoreText").GetComponentInChildren<TMPro.TextMeshProUGUI>();
 
     }
 
@@ -46,6 +47,7 @@ public class GameManager : MonoBehaviour
         score += 10 * (7 - gc.currentRoll);
         scoreCounterText.text = score.ToString();
         Debug.Log("player won a game!");
+
     }
 
     public void OnLoss()
