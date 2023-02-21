@@ -30,9 +30,14 @@ public class GameMenu : MonoBehaviour
     private void Awake() 
     {
         Singleton = this;
+    }
+
+    private void Start()
+    {
         hideBarClock = 0f;
         boostBarHidden = true;
         boostBarScale = boostBar.transform.localScale;
+        boostBar.transform.localScale = Vector3.zero;
     }
 
     public void UpdateBoostBar(float amount)
