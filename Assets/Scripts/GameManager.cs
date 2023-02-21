@@ -61,10 +61,10 @@ public class GameManager : MonoBehaviour
 
     public void OnLoss()
     {
+        GameController.frozen = false;
 
         player.chosenScam.Loss();
 
-        GameController.frozen = false;
 
         Debug.Log("player lost a game!");
     }

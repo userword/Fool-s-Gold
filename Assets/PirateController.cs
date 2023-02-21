@@ -282,9 +282,11 @@ public class PirateController : MonoBehaviour
 
         if (collision.gameObject.name == "PlayerParent")
         {
-            if (state == pirateState.CHASING) {
+            if (state == pirateState.CHASING && GameController.frozen == false) {
 
                 StartCoroutine(GC.PlaySweetTalkingGame());
+
+
 
             }
 
