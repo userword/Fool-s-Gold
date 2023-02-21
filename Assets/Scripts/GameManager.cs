@@ -6,7 +6,11 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager _singleton;
 
-   //public GameController gc;
+   public GameController gc;
+
+    public int score = 0;
+    public TMPro.TextMeshProUGUI scoreCounterText;
+
     public static GameManager Singleton
     {
         get => _singleton;
@@ -29,7 +33,8 @@ public class GameManager : MonoBehaviour
 
         Singleton = this;
 
-        //gc = GameObject.Find("Main Camera").GetComponent<GameController>();
+        gc = GameObject.Find("Main Camera").GetComponent<GameController>();
+        scoreCounterText = GameObject.Find("ScoreCounter").GetComponent<TMPro.TextMeshProUGUI>();
 
     }
 
@@ -38,6 +43,8 @@ public class GameManager : MonoBehaviour
 
         GameController.frozen = false;
 
+        score += 10 * (7 - gc.currentRoll);
+        scoreCounterText.text = score.ToString();
         Debug.Log("player won a game!");
     }
 
