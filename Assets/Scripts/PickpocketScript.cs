@@ -224,8 +224,6 @@ public class PickpocketScript : MonoBehaviour
         //print("END");
     }
 
-
-
     //Function to be called by animation event (once the transition completes to look back.
     public void ChangePirateState(int value)
     {
@@ -244,6 +242,8 @@ public class PickpocketScript : MonoBehaviour
 
     private void FailState()
     {
+
+        GameManager.Singleton.OnLoss();
 
         Destroy(gc.dicePrefabRef);
         Destroy(gameObject.transform.root.gameObject, 1);
