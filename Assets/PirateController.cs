@@ -26,7 +26,7 @@ public class PirateController : MonoBehaviour
 
     private direction movementDirection;
 
-    private pirateState state;
+    public pirateState state;
 
     private float speed = 1;
 
