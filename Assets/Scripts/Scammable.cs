@@ -8,6 +8,8 @@ public class Scammable : MonoBehaviour
     GameController controller;
 
     public  PirateController myPirate;
+
+    bool over = false;
     private void Awake()
     {
 
