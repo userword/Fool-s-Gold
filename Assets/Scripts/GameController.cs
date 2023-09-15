@@ -23,7 +23,47 @@ public class GameController : MonoBehaviour
 
     public GameObject lockpickingMinigamePrefab;
 
-    void Update() { }
+    public TMPro.TextMeshProUGUI pirateSpawnerDirectionText;
+
+    public PirateController.direction pirateSpawnerDirection;
+
+    public TMPro.TextMeshProUGUI pirateSpawnerTimerText;
+
+    public int pirateSpawnerTimer;
+
+    public TMPro.TextMeshProUGUI pirateSpawnerIntervalTimerText;
+
+    public int pirateSpawnerIntervalTimer;
+
+    void Update() {
+
+
+
+
+        if (Input.GetKeyUp(KeyCode.Alpha1))
+        {
+         // Pirate Spawner spawn key
+            
+
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.Alpha2))
+        {
+            // Rum Spawner spawn key
+
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.Alpha3))
+        {
+
+
+
+        }
+
+
+    }
 
     public void RollDice() {
 
@@ -36,7 +76,6 @@ public class GameController : MonoBehaviour
         dicePrefabRef.GetComponent<DiceShooter>().Play();
 
     }
-
     public IEnumerator PlayCupGame() {
 
         frozen = true;
@@ -68,7 +107,6 @@ public class GameController : MonoBehaviour
         miniGame.GetComponentInChildren<LockPicking>().Initalize(currentRoll);
 
     }
-
     public IEnumerator PlaySweetTalkingGame() 
     {
         frozen = true;
@@ -84,8 +122,6 @@ public class GameController : MonoBehaviour
         miniGame.GetComponentInChildren<SweetTalking>().Initalize(currentRoll);
 
     }
-
-
     public void PlayPickpocketingGame() {
 
         frozen = true;

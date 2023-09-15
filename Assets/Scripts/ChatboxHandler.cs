@@ -18,7 +18,7 @@ public class ChatboxHandler : MonoBehaviour
 
         if (collision.gameObject.name == "Chat box") {
 
-            if (Random.Range(0, 4) == 0 && !collision.gameObject.GetComponent<ChatboxHandler>().chatting) {
+            if (Random.Range(0, 1) == 0 && !collision.gameObject.GetComponent<ChatboxHandler>().chatting) {
 
 
                 if (collision.transform.position.x > transform.position.x) // if the other guy is to the right 
